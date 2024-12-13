@@ -1,0 +1,48 @@
+/* Navbar container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Logo styling */
+  .navbar-logo h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    font-family: "Montserrat", serif;
+  }
+  
+  /* Button container to center buttons */
+  .navbar-buttons {
+    display: flex;
+    gap: 1.5rem; /* Spacing between buttons */
+  }
+  
+  /* Button styling */
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: white;
+    color: #333;
+    border: none;
+    border-radius: 0; /* No rounded corners */
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s;
+    font-family: "Montserrat", serif;
+  }
+  
+  /* Button hover effect */
+  .btn:hover {
+    color: #007BFF;
+         /* Light gray background on hover */
+  }
+  
+  /* Button active state */
+  
+  
