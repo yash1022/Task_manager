@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import React, { useState, createContext } from "react";
+import LandingPage from "./components/landingpage";
 
 const authContext = createContext();
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <authContext.Provider value={{ token, setToken, value, setValue, User, setUser }}>
            <Navbar></Navbar>
              <Routes>
+               <Route path='/' element={<LandingPage></LandingPage>}> </Route>
 
 
 
