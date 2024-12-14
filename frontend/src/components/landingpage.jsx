@@ -24,28 +24,7 @@ function LandingPage() {
 </button>
     
      </div>
-     {/* <div className="components">
-        <div className="element">
-            <img src="./todo.avif" alt="" />
-            <p>Get Things Done,</p> 
-            <p> One Check at a Time!</p>
-        </div>
-        <div className="element">
-            <img src="./notemaking.webp" alt="" />
-            <p>Your Thoughts, </p> 
-            <p> Organized Effortlessly.</p>
-        </div>
-        <div className="element">
-            <img src="./event.png" alt="" />
-            <p>Master Your Schedule,  </p> 
-            <p> Own Your Day.</p>
-        </div>
-        <div className="element">
-            <img src="./whiteboard.png" alt="" />
-            <p>Imagine It. Draw It. Own It.  </p> 
-            
-        </div>
-     </div> */}
+     
 
   <div className="components">
      <div class="card">
@@ -80,14 +59,38 @@ function LandingPage() {
   </div>
 
   <div class="f-1">
-
+    <div className="para">Got a mountain of tasks to conquer?
+      <p> Say goodbye to chaos and hello to productivity  with your personalized  <span className="map2">to-do list!</span></p>
+       Organize your day, prioritize what matters, and tackle your goals with ease.</div>
+<div className="img1"><img src="./todo3.jpg" alt="" /></div>
     
 
 
 
   </div>
 
+  <div class="f-2">
+    <div className="img2"><img src="./note.jpg" alt="" /></div>
 
+    <div className="para2">Too many ideas slipping away?
+      <p>Stay organized and capture every thought with smart <br />  <span className="map2">note-making!</span></p>
+      Jot down ideas, keep track of details, and organize your notes effortlessly</div>
+    
+
+
+
+  </div>
+  <div class="f-1">
+    <div className="para">Struggling to manage your time? 
+      <p> With our smart  <span className="map2">Schedules</span></p>
+      planning your day has never been easier! Organize tasks, set priorities, and stay on track effortlessly. 
+      </div>
+<div className="img1"><img src="./schedule.jpg" alt="" /></div>
+    
+
+
+
+  </div>
     </div>
   );
 }
