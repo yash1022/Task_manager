@@ -124,7 +124,7 @@
     font-size: 30px;
     font-family: "Montserrat", serif;
     font-weight: 400;
-    color: rgb(128, 127, 127);
+    color: rgb(80, 80, 80);
 }
 /* .btn-grad {background-image: linear-gradient(to right, #1A2980 0%, #26D0CE  51%, #1A2980  100%)}
 .btn-grad {
@@ -228,7 +228,7 @@
   left: 0;
   top: 0;
   transition: all 0.5s ease-in-out;
-  background-color: #333;
+  background-color: #044288;
   border-radius: 30px;
   visibility: hidden;
   height: 10px;
@@ -266,7 +266,7 @@
         margin-bottom: -5px;
       }
  
- img{
+ .card img{
     
     width: 220px;
     height: 150px;
@@ -285,4 +285,63 @@
    background-color: #fef7f8;
   box-shadow: 15px 15px 30px #bebebe,
              -15px -15px 30px #ffffff;
+}
+
+
+.f-1{
+  display: flex;
+  float: left;
+  margin: 150px;
+}
+.img{
+  float: right;
+}
+.img1 img{
+  height: 500px;
+  width: 400px;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff;
+
+}
+.para{
+  font-size: 2.125rem;
+  font-family: "Montserrat", serif;
+  padding-top: 80px;
+  margin-right: 230px;
+  margin-left: 50px;
+  
+p{
+  font-family: "Montserrat", serif;
+}
+}
+.map2{
+  color:rgb(79, 79, 247);
+}
+.f-2{
+  display: flex;
+  float: left;
+  margin: 150px;
+}
+
+.img2 img{
+  height: 500px;
+  width: 400px;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff;
+
+}
+.para2{
+  font-size: 2.125rem;
+  font-family: "Montserrat", serif;
+  padding-top: 80px;
+  margin-left: 230px;
+  margin-right: 50px;
+  
+p{
+  font-family: "Montserrat", serif;
+}
 }
