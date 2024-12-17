@@ -34,7 +34,7 @@ function LandingPage() {
      <span class="btn-txt">Get Started</span>
     </button>
   ) : (
-    <button className="button type1" onClick={() => Navigate("/dashboard")}>
+    <button className="button type1" onClick={() => Navigate('/Dashboard')}>
       <span class="btn-txt">Get Started</span>
     </button>
   )
