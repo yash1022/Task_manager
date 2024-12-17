@@ -24,7 +24,7 @@
   }
   
   /* Button styling */
-  .btn {
+  .nav-btn {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     font-weight: 500;
@@ -38,7 +38,7 @@
   }
   
   /* Button hover effect */
-  .btn:hover {
+  .nav-btn:hover {
     color: #007BFF;
          /* Light gray background on hover */
   }

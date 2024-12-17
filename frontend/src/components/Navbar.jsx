@@ -4,10 +4,16 @@ import  { useContext, useState } from 'react';
 import {auth,provider} from "../config/firebaseconfig"
 import {signInWithPopup, signOut} from 'firebase/auth';
 import{authContext} from '../App'
-const Navbar = () => {
-    const Auth= useContext(authContext);
 
-    const signInWithGoogle= async(e)=>{
+
+
+
+const Navbar = () => {
+
+  const Auth= useContext(authContext);
+    
+
+   const signInWithGoogle= async(e)=>{
         e.preventDefault();
         signInWithPopup(auth,provider).then(async(result)=>{
           if(result)
@@ -84,9 +90,9 @@ const Navbar = () => {
         <h1>MindMapper</h1>
       </div>
       <div className="navbar-buttons">
-        <button className="btn">Home</button>
-        <button className="btn">About</button>
-        {Auth.value?(<button className="btn" onClick={handlelogout}>Logout</button>):(<button className="btn" onClick={signInWithGoogle}>Login</button>)}
+        <button className="nav-btn">Home</button>
+        <button className="nav-btn">About</button>
+        {Auth.value?(<button className="nav-btn" onClick={handlelogout}>Logout</button>):(<button className="nav-btn" onClick={signInWithGoogle}>Login</button>)}
         
       </div>
     </nav>

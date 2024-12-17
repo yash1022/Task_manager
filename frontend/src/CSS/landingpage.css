@@ -291,14 +291,14 @@
 .f-1{
   display: flex;
   float: left;
-  margin: 150px;
+  margin: 100px;
 }
 .img{
   float: right;
 }
 .img1 img{
   height: 500px;
-  width: 400px;
+  width: 500px;
   border: none;
   border-radius: 50px;
   box-shadow: 15px 15px 30px #bebebe,
@@ -306,28 +306,40 @@
 
 }
 .para{
-  font-size: 2.125rem;
+  /* font-size: 2.125rem; */
   font-family: "Montserrat", serif;
   padding-top: 80px;
   margin-right: 230px;
   margin-left: 50px;
+}
   
-p{
+.heading{
   font-family: "Montserrat", serif;
+  font-size:50px;
+  font-weight: 700;
 }
+
+.content
+{
+  font-family: "Montserrat", serif;
+  font-size:30px;
+  color:gray;
+  margin-top: 20px;
 }
+
 .map2{
   color:rgb(79, 79, 247);
+  font-family: "Montserrat", serif;
 }
 .f-2{
   display: flex;
   float: left;
-  margin: 150px;
+  margin: 100px;
 }
 
 .img2 img{
   height: 500px;
-  width: 400px;
+  width: 500px;
   border: none;
   border-radius: 50px;
   box-shadow: 15px 15px 30px #bebebe,
@@ -335,13 +347,27 @@ p{
 
 }
 .para2{
-  font-size: 2.125rem;
+  /* font-size: 2.125rem; */
   font-family: "Montserrat", serif;
   padding-top: 80px;
-  margin-left: 230px;
+  margin-left: 190px;
   margin-right: 50px;
   
-p{
-  font-family: "Montserrat", serif;
+
 }
+
+.heading2
+{
+  font-family: "Montserrat", serif;
+  font-size:50px;
+  font-weight: 700;
+}
+
+.content2
+{
+  font-family: "Montserrat", serif;
+  font-size:30px;
+  color:gray;
+  margin-top: 20px;
+
 }
