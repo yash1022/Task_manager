@@ -1,11 +1,63 @@
 .contentcontainer{
-  background-color: white;
+  /* background-color: white; */
   border: none;
-  border-radius: 30px;
-  height: 600px;
+
+  height:82vh;
   width: 1200px;
   
 }
-.calender{
-  float:right;
+
+.upper-tab
+{
+  display: flex;
+  width:1200px;
+  height:60px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  
+  .name
+  {
+    font-family: "Montserrat", serif;
+    font-weight: 600;
+    margin-left: 20px;
+    font-size: 20px;
+    color: #333;
+  }
+
+  .time
+  {
+    font-family: "Montserrat", serif;
+    font-weight: 600;
+    margin-left: 820px;
+    color: #333;
+  }
 }
+
+
+.lower-tab1
+{
+  display: flex;
+  width:1200px;
+  height:300px;
+  
+ 
+ 
+  margin-top: 10px;
+  gap:50px;
+
+   
+   .b
+   {
+     height: 300px;
+     width: 350px;
+     
+     border-radius: 15px;
+     background-color: white;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+   }
+}
+
+
