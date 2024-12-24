@@ -1,19 +1,20 @@
 import React from "react";
 import '../CSS/content.css';
-
+import Date from "./date";
+import Todo from "./todo";
 function Content() {
     return (
         <div>
             <div className="contentcontainer">
                 <div className="upper-tab">
 
-                      <div className="name">
+                       <div className="name">
                         Welcome,John
                       </div>
 
                       <div className="time">
-                        Wednesday,26 jan 2024
-                      </div>
+                        <Date></Date>
+                      </div> 
 
                 </div>
 
@@ -22,10 +23,10 @@ function Content() {
                     <div className=" b b1">
 
                     </div>
-
-                    <div className=" b b2">
-                        
-                    </div>
+                    <Todo></Todo>
+                    {/* <div className=" b b2">
+                      
+                    </div> */}
 
                     <div className=" b b3">
 
