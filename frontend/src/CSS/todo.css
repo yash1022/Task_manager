@@ -1,0 +1,179 @@
+/* General styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container styling */
+.todocontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    max-width: 330px;
+    max-height: 500px; /* Fixed height */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px #ffffff;
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Header styling */
+h5 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-family: "Montserrat", serif;
+    font-weight: 500;
+
+}
+
+/* Input field styling */
+header form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Space between input and button */
+    font-family: "Montserrat", serif;
+
+}
+
+/* Input field styling */
+.todo-input {
+    flex: 1; /* Allow input to take up available space */
+    width: auto;
+    max-width: 250px;
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+    font-size: 14px;
+    font-family: "Montserrat", serif;
+
+}
+
+/* Add Task button */
+.todo-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 15px;
+    background-color: #ffffff;
+    color: #333;
+    box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: "Montserrat", serif;
+
+}
+
+.todo-btn:hover {
+    background-color: #044288;
+    color: #ffffff;
+}
+/* Task list container with scrolling */
+.mylist {
+    width: 70%;
+    max-height: calc(100% - 100px); /* Adjust based on header and input sizes */
+    overflow-y: auto; /* Add vertical scroll */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    padding-right: 5px; /* Space for scroll bar */
+}
+
+.mylist ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Task item styling */
+.todoitem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.todoitem:hover {
+    transform: translateY(-2px);
+    background-color: #f8f8f8;
+}
+.checklist{
+    text-decoration:line-through;
+}
+.notchecklist{
+    text-decoration: none;
+}
+/* Task item text */
+.todoitem span {
+    font-size: 16px;
+    color: #333;
+    flex-grow: 1;
+    margin-right: 10px;
+    word-wrap: break-word;
+    font-family: "Montserrat", serif;
+
+}
+
+/* Task item buttons */
+.checkbtn, .deletebtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 5px;
+    color: #666;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover effects for buttons */
+.checkbtn:hover {
+    color: #28a745; /* Green for check */
+    transform: scale(1.2);
+}
+
+.deletebtn:hover {
+    color: #dc3545; /* Red for delete */
+    transform: scale(1.2);
+}
+
+/* Space between buttons */
+.checkbtn {
+    margin-right: 10px;
+}
+
+.clearbtn  {
+    padding: 8px 20px;
+    border: 1px solid grey;
+    border-radius: 15px;
+    background-color: #ffffff;
+    color: #333;
+    /* box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff; */
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: "Montserrat", serif;
+    align-items: center;
+    margin-left: 70px;
+
+
+}
+.clearbtn:hover{
+    background-color: #dc3545;
+    color: #f3f0f0;
+}
