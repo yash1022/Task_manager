@@ -18,8 +18,65 @@ model User{
   id             Int          @id @default(autoincrement())
   name           String        @unique
   email          String        @unique
-  profile_pic    String?
+  profile_pic    String?  
+  notes          notes[]  
+  events         events[]  
 }
+
+
+model events{
+  id Int @id @default(autoincrement())
+  title String @unique
+  description String?
+  start_date String 
+  end_date String
+  user User @relation(fields: [userID],references: [id], onDelete:Cascade)
+  userID Int
+}
+
+model tasks{
+
+  id Int @id @default(autoincrement())
+  title String
+  priority String
+  start_date String
+  end_date String
+  status Boolean @default(false)
+  
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+model notes{
+  id Int @id @default(autoincrement())
+  title  String
+  content String @db.LongText
+  user User? @relation(fields: [userId], references: [id],onDelete:Cascade)
+  userId Int
+}
+
+
+
+
+
+
+
+
+
 
  
   

@@ -6,55 +6,67 @@ body{
   border: none;
 
   height:82vh;
-  width: 1200px;
+  width: 1170px;
   
 }
 
 .upper-tab
 {
   display: flex;
-  width:1200px;
+  max-width:1170px;
   height:60px;
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
   
-  .name
+  
+
+  
+}
+
+.name
   {
     font-family: "Montserrat", serif;
     font-weight: 600;
-    margin-left: 20px;
+    
     font-size: 20px;
     color: #333;
+    
+    width: 700px;
+    white-space: nowrap;
   }
 
   .time
   {
     font-family: "Montserrat", serif;
     font-weight: 600;
-    margin-left: 760px;
+    
     color: #333;
+    margin-left: -40px;
   }
-}
 
 
 .lower-tab1
 {
   display: flex;
-  width:1200px;
+  width:1170px;
   height:300px;
+ 
   
  
  
   margin-top: 10px;
-  gap:50px;
+  gap:30px;
 
    
    .b
    {
      height: 300px;
-     width: 350px;
+     width: 365px;
      
      border-radius: 15px;
      background-color: white;

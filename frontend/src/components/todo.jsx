@@ -1,75 +1,79 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdCheck, MdOutlineDeleteForever } from "react-icons/md";
 
+
 import "../CSS/todo.css";
+import { PopContext } from "./Content";
 
 function Todo() {
-    const [inputValue, setInputValue] = useState({ id: "", content: "", checked: false });
-    const [task, setTask] = useState([]);
-
-    const handleInputChange = (value) => {
-        setInputValue({ id: Date.now(), content: value, checked: false });
-    };
-
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
-        const { id, content, checked } = inputValue;
-
-        if (!content) return;
-
-        const ifTaskMatched = task.find((curTask) => curTask.content === content);
-        if (ifTaskMatched) return;
-
-        setTask((prevTask) => [...prevTask, { id, content, checked }]);
-        setInputValue({ id: "", content: "", checked: false });
-    };
-
+    const Popup_context = useContext(PopContext);
+    const [expandedTask, setExpandedTask] = useState(null);
+    
     const handleDelete = (id) => {
-        const updatedTask = task.filter((curTask) => curTask.id !== id);
-        setTask(updatedTask);
+        const updatedTask = Popup_context.task.filter((curTask) => curTask.id !== id);
+        Popup_context.setTask(updatedTask);
     };
 
     const deleteAll = () => {
-        setTask([]);
+        Popup_context.setTask([]);
     };
 
     const handleCheck = (id) => {
-        const updatedTask = task.map((curTask) => {
+        const updatedTask = Popup_context.task.map((curTask) => {
             if (curTask.id === id) {
                 return { ...curTask, checked: !curTask.checked };
             }
             return curTask;
         });
-        setTask(updatedTask);
+        Popup_context.setTask(updatedTask);
     };
+
+
+    const handleclick=(id)=>{
+        setExpandedTask(expandedTask === id ? null : id);
+    }
 
     return (
         <div className="todocontainer">
             <header>
                 <h5>To-do List</h5>
-                <form onSubmit={handleFormSubmit}>
-                    <div>
-                        <input
-                            type="text"
-                            className="todo-input"
-                            autoComplete="off"
-                            value={inputValue.content}
-                            onChange={(event) => handleInputChange(event.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <button type="submit" className="todo-btn">Add Task</button>
-                    </div>
-                </form>
+               
+                <button type="button" className="todo-btn" onClick={()=>{Popup_context.SetPopup(true)}}>Add Task</button>
+                
             </header>
             <br />
             <div className="mylist">
+
+
                 <ul>
-                    {task.map((curTask) => (
-                        <li key={curTask.id} className="todoitem">
+                    {Popup_context.task.map((curTask) => (
+                        <li key={curTask.id} className="todoitem" onClick={() => handleclick(curTask.id)}>
                             <span className={curTask.checked ? "checklist" : "notchecklist"}>
                                 {curTask.content}
                             </span>
+
+                           
+                <span
+                    className="priority"
+                    style={{
+                        color:
+                            curTask.priority === "High"
+                                ? "red"
+                                : curTask.priority === "Medium"
+                                ? "yellow"
+                                : "green",
+                    }}
+                >   
+                    {curTask.priority}
+                </span>
+
+                {expandedTask === curTask.id && (
+                            <div className="additional-info">
+                                <p>Start Date: {curTask.startDate}</p>
+                                <p>End Date: {curTask.endDate}</p>
+                                <p>Priority: {curTask.priority}</p>
+                            </div>
+                        )}
                             <button className="checkbtn" onClick={() => handleCheck(curTask.id)}>
                                 <MdCheck />
                             </button>

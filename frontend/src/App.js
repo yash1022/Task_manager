@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import React, { useState, createContext } from "react";
 import LandingPage from "./components/landingpage";
 import Dashboard from "./components/Dashboard";
+import TxtEditor from "./components/TxtEditor";
 
 const authContext = createContext();
 function App() {
@@ -15,10 +16,11 @@ function App() {
   return (
     <Router> 
         <authContext.Provider value={{ token, setToken, value, setValue, User, setUser }}>
-           <Navbar></Navbar>
+             
              <Routes>
                <Route path='/' element={<LandingPage></LandingPage>}></Route>
                <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
+               <Route path='/notes' element={<TxtEditor></TxtEditor>}></Route>
                
 
 

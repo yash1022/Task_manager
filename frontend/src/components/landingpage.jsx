@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import '../CSS/landingpage.css';
 import { Link, useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 import{authContext} from '../App'
 
 
@@ -12,6 +13,8 @@ function LandingPage() {
 
 
   return (
+    <>
+    <Navbar></Navbar>
     <div>
       <div className="main">
         <h1>
@@ -119,6 +122,7 @@ function LandingPage() {
 
   </div>
     </div>
+    </>
   );
 }
 

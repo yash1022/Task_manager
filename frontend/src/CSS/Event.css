@@ -11,12 +11,12 @@ body {
 }
 
 /* Container styling */
-.todocontainer {
+.Eventcontainer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    width: 330px;
     max-width: 330px;
     max-height: 500px; /* Fixed height */
     padding: 20px;
@@ -25,6 +25,7 @@ body {
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px #ffffff;
     overflow: hidden; /* Prevent content overflow */
     z-index: 1000;
+    height: 260px;
 }
 
 /* Header styling */
@@ -39,29 +40,10 @@ h5 {
 }
 
 /* Input field styling */
-header form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px; /* Space between input and button */
-    font-family: "Montserrat", serif;
 
-}
 
 /* Input field styling */
-.todo-input {
-    flex: 1; /* Allow input to take up available space */
-    width: auto;
-    max-width: 250px;
-    padding: 8px;
-    border-radius: 20px;
-    border: none;
-    background-color: #ffffff;
-    box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
-    font-size: 14px;
-    font-family: "Montserrat", serif;
 
-}
 
 /* Add Task button */
 .todo-btn {
@@ -70,7 +52,7 @@ header form {
     border-radius: 15px;
     background-color: #ffffff;
     color: #333;
-    box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+    /* box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff; */
     font-size: 13px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -81,7 +63,7 @@ header form {
 
 
 /* Task list container with scrolling */
-.mylist {
+.Eventlist {
     width:350px;
     max-height: calc(100% - 100px); /* Adjust based on header and input sizes */
     overflow-y: auto; /* Add vertical scroll */
@@ -90,20 +72,21 @@ header form {
 
 }
 
-.mylist ul {
+.Eventlist ul {
     list-style-type: none;
     padding-left:10px;
     margin: 0;
 }
 
 /* Task item styling */
-.todoitem {
+.Eventitem {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     margin-bottom: 8px;
     border-radius: 5px;
+    height:80px;
     background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, background-color 0.2s ease;
@@ -118,7 +101,7 @@ header form {
     text-decoration: none;
 }
 /* Task item text */
-.todoitem span {
+.Eventitem span {
     font-size: 16px;
     color: #333;
     flex-grow: 1;
@@ -176,8 +159,3 @@ header form {
     color: #f3f0f0;
 }
 
-.priority {
-    flex: 0 0 100px; /* Fixed width for alignment */
-    text-align: center;
-    
-}

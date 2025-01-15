@@ -7,8 +7,8 @@ function DateTime() {
     const interval= setInterval(()=>{
         const now = new Date();
         const formattedDate = now.toLocaleDateString(); // Corrected method name
-        const formattedTime = now.toLocaleTimeString(); // Add time display
-        setDateTime(`${formattedDate}-${formattedTime}`); 
+         // Add time display
+        setDateTime(`${formattedDate}`); 
     },1000);
     return ()=>clearInterval()
    },[])

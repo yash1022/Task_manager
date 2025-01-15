@@ -22,7 +22,7 @@ const Navbar = () => {
                 alert(`welcome ${result.user.displayName}`);
                 Auth.setValue(true)
                 Auth.setToken(result.user.accessToken);
-                Auth.setUser(result.user.email);
+                Auth.setUser(result.user);
                 
             }
 
