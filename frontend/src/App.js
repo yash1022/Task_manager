@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Flashcard from "./components/Flashcard";
 import React, { useState, createContext } from "react";
 import LandingPage from "./components/landingpage";
 import Dashboard from "./components/Dashboard";
@@ -21,6 +21,7 @@ function App() {
                <Route path='/' element={<LandingPage></LandingPage>}></Route>
                <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
                <Route path='/notes' element={<TxtEditor></TxtEditor>}></Route>
+               <Route path='/flashcard'element={<Flashcard></Flashcard>}></Route>
                
 
 

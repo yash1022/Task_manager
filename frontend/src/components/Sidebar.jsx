@@ -14,14 +14,14 @@ const Sidebar = () => {
           alt="Profile"
           className="profile-img"
         />
-        <h3 className="profile-name">{Auth.User.displayName}</h3>
+        <h3 className="profile-name">{Auth.User?.displayName}</h3>
       </div>
       <hr className="separator" />
       <div className="sidebar-buttons">
         <button className="neu-button" onClick={()=>{navigate('/dashboard')}}>Dashboard</button>
         <button className="neu-button" onClick={()=>{navigate('/notes')}}>Notes</button>
         <button className="neu-button">Schedules</button>
-        <button className="neu-button">Flashcards</button>
+        <button className="neu-button" onClick={()=>{navigate('/flashcard')}}>Flashcards</button>
       </div>
 
 
