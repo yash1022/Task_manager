@@ -34,27 +34,27 @@ function Todo() {
     }
 
     return (
-        <div className="todocontainer">
+        <div className="todocontainer1" style={{width: "730px"}}>
             <header>
-                <h5>To-do List</h5>
+                <h5>Events</h5>
                
-                <button type="button" className="todo-btn" onClick={()=>{Popup_context.SetPopup(true)}}>Add Task</button>
+                <button type="button" className="todo-btn1" onClick={()=>{Popup_context.SetPopup(true)}}>Add Upcoming Events</button>
                 
             </header>
             <br />
-            <div className="mylist">
+            <div className="mylist1">
 
 
                 <ul>
                     {Popup_context.task.map((curTask) => (
-                        <li key={curTask.id} className="todoitem" onClick={() => handleclick(curTask.id)}>
+                        <li key={curTask.id} className="todoitem1" onClick={() => handleclick(curTask.id)}>
                             <span className={curTask.checked ? "checklist" : "notchecklist"}>
                                 {curTask.content}
                             </span>
 
                            
                 <span
-                    className="priority"
+                    className="priority1"
                     style={{
                         color:
                             curTask.priority === "High"
@@ -67,18 +67,18 @@ function Todo() {
                     {curTask.priority}
                 </span>
 
-                {expandedTask === curTask.id && (
-                            <div className="additional-info">
+                
+                            <div className="additional-info1">
                                 <p>Start Date: {curTask.startDate}</p>
                                 <p>End Date: {curTask.endDate}</p>
-                                <p>Priority: {curTask.priority}</p>
+                                {/* <p>Priority: {curTask.priority}</p> */}
                             </div>
-                        )}
-                            <button className="checkbtn" onClick={() => handleCheck(curTask.id)}>
+                        
+                            <button className="checkbtn1" onClick={() => handleCheck(curTask.id)}>
                                 <MdCheck />
                             </button>
                             <button
-                                className="deletebtn"
+                                className="deletebtn1"
                                 onClick={() => handleDelete(curTask.id)}
                             >
                                 <MdOutlineDeleteForever />
@@ -86,7 +86,7 @@ function Todo() {
                         </li>
                     ))}
                 </ul>
-                <button className="clearbtn" onClick={deleteAll}>
+                <button className="clearbtn1" onClick={deleteAll}>
                     Clear All
                 </button>
             </div>
