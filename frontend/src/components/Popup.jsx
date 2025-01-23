@@ -69,7 +69,7 @@ export  function Taskpopup({onclose}) {
  
 
   return (
-    <div className='popupbox'>
+    <div className='popupbox' style={{height:"265px", width:"370px"}}>
         <div className='heading'>
             Add Task
         </div>

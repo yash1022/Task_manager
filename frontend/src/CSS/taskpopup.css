@@ -1,21 +1,98 @@
 .popupbox
 {
     background-color:#fff;
-    height:400px;
-    width:300px;
-    margin-left: 400px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+    height:300px;
+    width:100px;
     border-radius: 20px;
-    
+    padding: 10px;
+    position: fixed;
+    top: 23%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    transform: scale(1.05);
+    box-shadow: 13px 13px 100px #969696,
+               -13px -13px 100px #ffffff;
+               font-family: "Montserrat", serif;
+  }
 
-}
-
+.popupbox:focus {
+    background-color: white;
+    transform: scale(1.05);
+    box-shadow: 13px 13px 100px #969696,
+               -13px -13px 100px #ffffff;
+               font-family: "Montserrat", serif;
+  }
 
 .heading 
 {
-    font-size: 20px;
+    font-size: 24px;
     font-family: "Montserrat",serif;
     text-align: center;
-    margin-top: -20px;
+    margin-top: 25bcpx;
+    font-weight: 500;
+
     
+}
+.formcontainer{
+    margin: 15px;
+}
+.form-group{
+    text-align: center;
+    margin: 8px;
+    
+}
+#taskName{
+    border: 1px solid rgb(143, 142, 142);
+
+    border-radius: 25px;
+    width: 175px;
+    padding: 5px;
+    font-size: 15px;
+
+}
+#startDate{
+    border: 1px solid rgb(143, 142, 142);
+    border-radius: 25px;
+    width: 160px;
+    padding: 8px;
+    font-size: 15px;
+}
+#endDate{
+    border: 1px solid rgb(143, 142, 142);
+    border-radius: 25px;
+    width: 160px;
+    padding: 8px;
+    font-size: 15px;
+
+}
+#priority{
+    border: 1px solid rgb(143, 142, 142);
+    border-radius: 25px;
+    width: 160px;
+    padding: 8px;
+    font-size: 15px;
+
+}
+
+.form-actions{
+    display: flex;
+    margin-left: 90px;
+}
+.btn{
+    border: 1px solid rgb(143, 142, 142);
+    border-radius: 25px;
+    width: 90px;
+    padding: 6px;
+    font-size: 15px;
+    background-color: white;
+    margin: 4px;
+    
+}
+.btn:hover{
+    background-color:rgb(79, 79, 247); ;
 }

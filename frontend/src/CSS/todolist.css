@@ -12,7 +12,7 @@ body {
 }
 
 /* Container styling */
-.todocontainer1 {
+.todocontainer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -51,10 +51,10 @@ header form {
 }
 
 /* Input field styling */
-.todo-input1 {
+.todo-input {
     flex: 1; /* Allow input to take up available space */
-    width: 500px;
-    max-width: 250px;
+    width: 350px;
+    max-width: 350px;
     padding: 8px;
     border-radius: 20px;
     border: none;
@@ -66,7 +66,7 @@ header form {
 }
 
 /* Add Task button */
-.todo-btn1 {
+.todo-btn {
     padding: 8px 20px;
     border: none;
     border-radius: 15px;
@@ -77,14 +77,14 @@ header form {
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
     font-family: "Montserrat", serif;
-    width:500px;
+    width:100px;
 
 }
 
 
 /* Task list container with scrolling */
-.mylist1 {
-    width:730px;
+.mylist {
+    width:530px;
     max-height: calc(100% - 100px); /* Adjust based on header and input sizes */
     overflow-y: auto; /* Add vertical scroll */
     overflow-x: hidden; /* Prevent horizontal scroll */
@@ -92,14 +92,14 @@ header form {
 
 }
 
-.mylist1 ul {
+.mylist ul {
     list-style-type: none;
     padding-left:10px;
     margin: 0;
 }
 
 /* Task item styling */
-.todoitem1 {
+.todoitem {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -113,14 +113,14 @@ header form {
 }
 
 
-.checklist1{
+.checklist{
     text-decoration:line-through;
 }
-.notchecklist1{
+.notchecklist{
     text-decoration: none;
 }
 /* Task item text */
-.todoitem1 span {
+.todoitem span {
     font-size: 16px;
     color: #333;
     flex-grow: 1;
@@ -131,7 +131,7 @@ header form {
 }
 
 /* Task item buttons */
-.checkbtn1, .deletebtn1 {
+.checkbtn, .deletebtn {
     background: none;
     border: none;
     cursor: pointer;
@@ -142,22 +142,22 @@ header form {
 }
 
 /* Hover effects for buttons */
-.checkbtn1:hover {
+.checkbtn:hover {
     color: #28a745; /* Green for check */
     transform: scale(1.2);
 }
 
-.deletebtn1:hover {
+.deletebtn:hover {
     color: #dc3545; /* Red for delete */
     transform: scale(1.2);
 }
 
 /* Space between buttons */
-.checkbtn1 {
+.checkbtn {
     margin-right: 10px;
 }
 
-.clearbtn1 {
+.clearbtn  {
     padding: 8px 20px;
     border: 1px solid grey;
     border-radius: 15px;
@@ -169,16 +169,16 @@ header form {
     transition: background-color 0.3s ease, color 0.3s ease;
     font-family: "Montserrat", serif;
     align-items: center;
-    margin-left: 320px;
+    margin-left: 220px;
 
 
 }
-.clearbtn1:hover{
+.clearbtn:hover{
     background-color: #dc3545;
     color: #f3f0f0;
 }
 
-.priority1 {
+.priority {
     font-family: "Montserrat", serif;
 
     flex: 0 0 100px; /* Fixed width for alignment */

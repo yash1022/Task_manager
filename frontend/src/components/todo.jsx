@@ -81,15 +81,15 @@ function Todo() {
     }
 
     return (
-        <div className="todocontainer">
+        <div className="todocontainer1" style={{width: "730px"}}>
             <header>
-                <h5>To-do List</h5>
+                <h5>Events</h5>
                
-                <button type="button" className="todo-btn" onClick={()=>{Popup_context.SetPopup(true)}}>Add Task</button>
+                <button type="button" className="todo-btn1" onClick={()=>{Popup_context.SetPopup(true)}}>Add Upcoming Events</button>
                 
             </header>
             <br />
-            <div className="mylist">
+            <div className="mylist1">
 
 
                 <ul>
@@ -101,7 +101,7 @@ function Todo() {
 
                            
                 <span
-                    className="priority"
+                    className="priority1"
                     style={{
                         color:
                             curTask.priority === "High"
@@ -138,7 +138,7 @@ function Todo() {
                         </li>
                     ))}
                 </ul>
-                <button className="clearbtn" onClick={deleteAll}>
+                <button className="clearbtn1" onClick={deleteAll}>
                     Clear All
                 </button>
             </div>
