@@ -1,43 +1,106 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css'
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import '../CSS/txtEditor.css'
+import { authContext } from '../App';
 
 export default function TxtEditor() {
 	const editorRef = useRef(null); // Create a reference for the editor container
 	const [Title,SetTitle]=useState('');
-	const [Content,Setcontent]= useState('');
+  const [Notes, setNotes]=useState([]);
+  const[trigger,setTrigger]= useState(false);
 	const quillRef =useRef(null);
-	const recentNotes = [
-		{ title: 'First Note', dateCreated: '2025-01-15' },
-		{ title: 'Second Note', dateCreated: '2025-01-14' },
-	  ];
+  const Auth= useContext(authContext)
 
-	const handleSave=()=>{
-          const content= quillRef.current.getContents();
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', options); // 'en-GB' is used for the format "day month year"
+  };
+	
+
+	const handleSave= async(id)=>{
+          const content= quillRef.current.getText();
+
+          const data =
+          { title:Title,
+            content: JSON.stringify(content),
+            email: id
+          }
+
+          const response= fetch('http://localhost:5000/api/saveNotes',{
+             method: 'POST',
+             headers:{
+               'Content-Type':'application/json'
+             },
+             body:JSON.stringify(data)
+          })
+
+          if(response)
+          {
+           
+            SetTitle('');
+            handleDelete();
+          }
+
+
+          setTrigger(!trigger);
+
+
 	}
 
 	const handleDelete=()=>{
 		quillRef.current.setText('');
 	}
 
-
-  
-	useEffect(() => {
+useEffect(() => {
 	  if (editorRef.current) {
 		const quill = new Quill(editorRef.current, {
 		  debug: 'info',
 		  modules: {
 			toolbar: false,
 		  },
-		  placeholder: 'Write some notes',
+		  placeholder: 'Write your notes',
 		  theme: 'bubble',
 		});
 		quillRef.current =quill;
 	  }
-	}, []);
+
+
+
+    getNotes();
+    
+
+
+	}, [trigger]);
+
+ const getNotes= async()=>{
+    const response= await fetch(`http://localhost:5000/api/getNotes/${Auth.User.email}`,{
+      method:'GET',
+      headers:{
+        'Content-Type':'application/json'
+      }
+
+      
+
+    })
+
+    const data= await response.json();
+
+    if(data.success)
+    {
+     
+      setNotes(data.notes);
+    }
+
+    else
+    {
+      alert(data.message);
+    }
+
+  }
   
 	return (
 		<>
@@ -53,7 +116,7 @@ export default function TxtEditor() {
 
 		           <div id="editor" ref={editorRef} style={{height:'500px'}}></div>
 
-				   <button className='save-btn' onClick={handleSave}>Save</button>
+				   <button className='save-btn' onClick={()=>handleSave(Auth.User.email)}>Save</button>
 				   <button className='save-btn' onClick={handleDelete}>Clear</button>
 	         </div>
 
@@ -84,30 +147,17 @@ export default function TxtEditor() {
       flex: '1',
       overflowY: 'auto',
     }}>
-      {/* Example cards */}
-      {recentNotes.map((note, index) => (
-        // <div key={index} style={{
-        //   border: '1px solid #ccc',
-        //   borderRadius: '8px',
-        //   padding: '10px',
-        //   marginBottom: '10px',
-        //   backgroundColor: '#fff',
-        //   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-		//   marginTop: '10px'
-        // }}>
-        //   <h4 style={{ margin: '0 0 5px', fontSize: '16px' }}>{note.title}</h4>
-        //   <p style={{ margin: 0, fontSize: '12px', color: '#6c757d' }}>
-        //     {note.dateCreated}
-        //   </p>
-        // </div>
+      
+      { Notes.map((note) => (
+      
 
 
-		<div class="card">
-    <h3 class="card__title">Title
+		<div class="card" key={note.id}>
+    <h3 class="card__title">{note.title}
     </h3>
-    <p class="card__content">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+    <p class="card__content">{note.content.substring(0,35)}...</p>
     <div class="card__date">
-        April 15, 2022
+        {formatDate(note.created_at)}
     </div>
     <div class="card__arrow">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">

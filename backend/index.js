@@ -2,7 +2,7 @@ const express = require('express');
 const app= express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
-const {insert_user} = require("./scripts")
+const {insert_user, createTask, getTasks, saveNotes, getNotes} = require("./scripts")
 
 
 app.use(bodyParser.json());
@@ -15,12 +15,12 @@ app.post('/api/auth',async (req, res) => {
     userdata=req.body;
 
 
-    console.log(userdata);
+    
 
     try
     {
         await insert_user(userdata);
-        console.log("DATABSE UPDATED");
+       
        
     }catch(e)
     {
@@ -28,6 +28,44 @@ app.post('/api/auth',async (req, res) => {
        
     }
 
+})
+
+app.post('/api/tasks',async (req, res) => {
+
+   const {tasks,userEmail}= req.body;
+  
+
+   const response =await createTask(tasks,userEmail);
+   res.json(response);
+})
+
+app.post('/api/getTasks', async(req,res)=>{
+    const {email} = req.body;
+
+    const tasks = await getTasks(email);
+   
+
+    res.json(tasks);
+
+})
+
+app.post('/api/saveNotes', async(req,res)=>{
+    const {title,content,email}= req.body;
+
+
+  const resposne= await saveNotes(title,content,email);
+
+  res.json(resposne);
+})
+
+app.get('/api/getNotes/:email',async (req,res)=>{
+    const {email}= req.params;
+    const notes =await getNotes(email);
+
+    
+
+    res.json(notes);
+ 
 })
 
 

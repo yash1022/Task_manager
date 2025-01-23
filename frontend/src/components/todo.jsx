@@ -1,13 +1,62 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdCheck, MdOutlineDeleteForever } from "react-icons/md";
 
 
 import "../CSS/todo.css";
 import { PopContext } from "./Content";
+import { authContext } from "../App";
 
 function Todo() {
+
+
     const Popup_context = useContext(PopContext);
+    const Auth= useContext(authContext);
     const [expandedTask, setExpandedTask] = useState(null);
+
+    useEffect(()=>{
+
+             fetchTasks(Auth.User.email)
+
+    },[Popup_context.update])
+
+    const fetchTasks= async (email)=>{
+        const response = await fetch('http://localhost:5000/api/getTasks',{
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  
+                },
+                body: JSON.stringify({email})
+        });
+
+
+        if(!response.ok)
+        {
+            console.log("Error fetching tasks")
+            return;
+        }
+
+        const data = await response.json();
+
+          
+         
+
+           sortTasks(data)    //BY START DATE
+
+          
+
+
+    }
+
+    const sortTasks = async (data)=>{
+
+        const sortedTasks = data.sort((a,b)=> new Date(a.start_date)- new Date(b.start_date))
+
+        Popup_context.setTask(sortedTasks);
+
+
+              
+     }
     
     const handleDelete = (id) => {
         const updatedTask = Popup_context.task.filter((curTask) => curTask.id !== id);
@@ -19,13 +68,11 @@ function Todo() {
     };
 
     const handleCheck = (id) => {
-        const updatedTask = Popup_context.task.map((curTask) => {
-            if (curTask.id === id) {
-                return { ...curTask, checked: !curTask.checked };
-            }
-            return curTask;
-        });
-        Popup_context.setTask(updatedTask);
+        Popup_context.setTask((prevTasks) =>
+            prevTasks.map((task) =>
+                task.id === id ? { ...task, status: !task.status } : task
+            )
+        );
     };
 
 
@@ -47,9 +94,9 @@ function Todo() {
 
                 <ul>
                     {Popup_context.task.map((curTask) => (
-                        <li key={curTask.id} className="todoitem" onClick={() => handleclick(curTask.id)}>
-                            <span className={curTask.checked ? "checklist" : "notchecklist"}>
-                                {curTask.content}
+                        <li  className="todoitem" key={curTask.id} onClick={()=>handleclick(curTask.id)}>
+                            <span className={curTask.status ? "checklist" : "notchecklist"}>
+                                {curTask.title}
                             </span>
 
                            
@@ -69,17 +116,22 @@ function Todo() {
 
                 {expandedTask === curTask.id && (
                             <div className="additional-info">
-                                <p>Start Date: {curTask.startDate}</p>
-                                <p>End Date: {curTask.endDate}</p>
+                                <p>Start Date: {curTask.start_date}</p>
+                                <p>End Date: {curTask.end_date}</p>
                                 <p>Priority: {curTask.priority}</p>
                             </div>
                         )}
-                            <button className="checkbtn" onClick={() => handleCheck(curTask.id)}>
+                            <button className="checkbtn" 
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                handleCheck(curTask.id)
+                            }}
+                            >
                                 <MdCheck />
                             </button>
                             <button
                                 className="deletebtn"
-                                onClick={() => handleDelete(curTask.id)}
+                                // onClick={() => handleDelete(curTask.id)}
                             >
                                 <MdOutlineDeleteForever />
                             </button>

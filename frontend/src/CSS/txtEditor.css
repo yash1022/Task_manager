@@ -114,6 +114,12 @@
   position: relative;
   height: 100px;
   margin-top: 15px;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 1; /* Number of lines to show */
+  /* -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+  
 }
 
 .card > * + * {
@@ -124,6 +130,7 @@
   color: var(--secondary-color);
   font-size: 0.86rem;
   font-family: "Montserrat", serif;
+  
 }
 
 .card .card__title {
@@ -137,6 +144,8 @@
   color: #6e6b80;
   font-size: 0.8rem;
   font-family: "Montserrat", serif;
+  margin-top: 40px;
+  
 }
 
 .card .card__arrow {

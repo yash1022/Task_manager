@@ -12,8 +12,9 @@ const PopContext = createContext();
 function Content() {
 
   const [Popup, SetPopup]= useState(false)
-  const [inputValue, setInputValue] = useState({ id: "", content: "", checked: false, startDate: "",endDate: "",priority: "Low",});
+  const [inputValue, setInputValue] = useState({content: "", checked: false, startDate: "",endDate: "",priority: "Low",});
   const [task, setTask] = useState([]);
+  const [update, setUpdate] = useState('false');
   const Auth= useContext(authContext);
     return (
       
@@ -40,7 +41,7 @@ function Content() {
                     {/* <div className=" b b1" style={{zIndex:'1001'}}> */}
 
                     {
-                      Popup && <PopContext.Provider value={{Popup,SetPopup,inputValue,setInputValue,task,setTask}}><Taskpopup onclose={()=>{SetPopup(false)}}></Taskpopup></PopContext.Provider> 
+                      Popup && <PopContext.Provider value={{Popup,SetPopup,inputValue,setInputValue,task,setTask, update,setUpdate}}><Taskpopup onclose={()=>{SetPopup(false)}}></Taskpopup></PopContext.Provider> 
                     }
 
 
@@ -53,7 +54,7 @@ function Content() {
                    
 
 
-                  <PopContext.Provider value={{Popup,SetPopup,inputValue,setInputValue,task,setTask}}>
+                  <PopContext.Provider value={{Popup,SetPopup,inputValue,setInputValue,task,setTask, update, setUpdate}}>
                     <Todo></Todo>
                   </PopContext.Provider>
                    

@@ -21,6 +21,7 @@ model User{
   profile_pic    String?  
   notes          notes[]  
   events         events[]  
+  tasks          tasks[]  
 }
 
 
@@ -37,34 +38,25 @@ model events{
 model tasks{
 
   id Int @id @default(autoincrement())
-  title String
+  title String  @unique
   priority String
   start_date String
   end_date String
   status Boolean @default(false)
-  
-
-
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 }
 
-
-
-
-
-
-
-
-
-
-
+  
 
 
 
 
 model notes{
   id Int @id @default(autoincrement())
-  title  String
+  title  String  @unique
   content String @db.LongText
+  created_at DateTime @default(now())
   user User? @relation(fields: [userId], references: [id],onDelete:Cascade)
   userId Int
 }

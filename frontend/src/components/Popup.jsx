@@ -1,35 +1,64 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import "../CSS/taskpopup.css"
 import { PopContext } from './Content'
+import { authContext } from '../App';
 
 export  function Taskpopup({onclose}) {
   const taskData = useContext(PopContext);
+  const Auth= useContext(authContext)
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     taskData.setInputValue((prevData) => ({
       ...prevData,
       [name]: value,
-      id:prevData.id || Date.now(), 
+      // id:prevData.id || Date.now(), 
     }));
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    
     
 
-    taskData.setTask((prevTasks) => [...prevTasks, taskData.inputValue]);
+    // taskData.setTask((prevTasks) => [...prevTasks, taskData.inputValue]);
 
-    taskData.setInputValue({
-      id: "",
-      content: "",
-      checked: false,
-      startDate: "",
-      endDate: "",
-      priority: "Low",
-    });
+    try
+    {
+      const response=await fetch('http://localhost:5000/api/tasks',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
 
+        body: JSON.stringify({
+          tasks:taskData.inputValue,
+          userEmail:Auth.User.email
+        })
+       })
+
+      
+
+       
+
+    }
+    catch(err)
+    {
+      console.log(err);
+    }
+    
+      taskData.setInputValue({
+        // id: "",
+        content: "",
+        checked: false,
+        startDate: "",
+        endDate: "",
+        priority: "Low",
+      });
+      taskData.update?(taskData.setUpdate(false)):(taskData.setUpdate(true));
     onclose();
     
   };
@@ -44,7 +73,7 @@ export  function Taskpopup({onclose}) {
         <div className='heading'>
             Add Task
         </div>
-
+        <div className="formcontainer">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="taskName">Task Name:</label>
@@ -98,12 +127,13 @@ export  function Taskpopup({onclose}) {
           </div>
 
           <div className="form-actions">
-            <button type="submit">Save Task</button>
-            <button type="button" onClick={onclose}>
+            <button type="submit" className='btn'>Save Task</button>
+            <button type="button" onClick={onclose} className='btn'>
               Cancel
             </button>
           </div>
         </form>
+        </div>
     </div>
   )
 }
