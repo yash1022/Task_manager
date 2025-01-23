@@ -40,11 +40,11 @@ export  function Taskpopup({onclose}) {
  
 
   return (
-    <div className='popupbox'>
+    <div className='popupbox' style={{height:"265px", width:"370px"}}>
         <div className='heading'>
             Add Task
         </div>
-
+<div className="formcontainer">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="taskName">Task Name:</label>
@@ -98,12 +98,13 @@ export  function Taskpopup({onclose}) {
           </div>
 
           <div className="form-actions">
-            <button type="submit">Save Task</button>
-            <button type="button" onClick={onclose}>
+            <button type="submit" className='btn'>Save Task</button>
+            <button type="button" onClick={onclose} className='btn'>
               Cancel
             </button>
           </div>
         </form>
+        </div>
     </div>
   )
 }

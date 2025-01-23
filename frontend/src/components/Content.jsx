@@ -2,11 +2,11 @@ import React, { createContext, useContext, useState } from "react";
 import '../CSS/content.css';
 import Date from "./date";
 import Todo from "./todo";
-import Events from "./Events"
+
 import {Taskpopup} from "../components/Popup"
 import { authContext } from "../App";
 
-
+import Todolist from "./todolist";
 const PopContext = createContext();
 
 function Content() {
@@ -46,7 +46,7 @@ function Content() {
 
                     {/* </div> */}
 
-                    <Events></Events>
+                    
 
                    
 
@@ -74,10 +74,15 @@ function Content() {
                        </div>
                         
                     </div>
+                   
+              
+                    
                     
                 </div>
+                <div className="lower-tab1">
+                <Todolist></Todolist>
 
-
+                </div>
                
          </div>
     </div>
