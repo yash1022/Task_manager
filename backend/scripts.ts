@@ -226,6 +226,48 @@ catch (error) {
 }
 
 
+ export const deleteNote= async (email:any, noteId:any)=>{
+
+      try
+      {
+        const userdata= await prisma.user.findUnique({
+            where:{
+                email:email
+            }
+        })
+
+
+        if(!userdata)
+        {
+            return{success:false}
+        }
+
+         await prisma.notes.delete({
+            where:{
+
+                id:noteId,
+                userId:userdata.id
+
+            }
+         })
+
+         return{success:true}
+      }
+      catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+    }
+
+
+
+
+
+
+}
+
+
 
 
 

@@ -138,10 +138,11 @@ function Todo() {
                         </li>
                     ))}
                 </ul>
+                
+            </div>
                 <button className="clearbtn1" onClick={deleteAll}>
                     Clear All
                 </button>
-            </div>
         </div>
     );
 }

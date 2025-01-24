@@ -2,7 +2,7 @@ const express = require('express');
 const app= express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
-const {insert_user, createTask, getTasks, saveNotes, getNotes} = require("./scripts")
+const {insert_user, createTask, getTasks, saveNotes, getNotes, deleteNote} = require("./scripts")
 
 
 app.use(bodyParser.json());
@@ -66,6 +66,18 @@ app.get('/api/getNotes/:email',async (req,res)=>{
 
     res.json(notes);
  
+})
+
+app.delete('/api/deleteNote/:email/:id', async(req,res)=>{
+
+    const {email,id}= req.params;
+
+    const response =await deleteNote(email,parseInt(id,10));
+
+    res.json(response);
+
+    
+
 })
 
 

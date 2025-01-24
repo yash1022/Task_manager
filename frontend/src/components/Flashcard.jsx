@@ -47,7 +47,7 @@ export default function Flashcard() {
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
                         <p class="title">{flashcards.title}</p>
-                        <p style={{marginTop:'5px'}}>{flashcards.subject}</p>
+                        <p style={{marginTop:'5px', fontFamily:"Montserrat,serif"}}>{flashcards.subject}</p>
                        
                     </div>
                     <div class="flip-card-back">

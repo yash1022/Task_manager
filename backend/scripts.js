@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNotes = exports.saveNotes = exports.getTasks = exports.createTask = exports.insert_user = void 0;
+exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getTasks = exports.createTask = exports.insert_user = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const insert_user = (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -164,3 +164,30 @@ const getNotes = (email) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getNotes = getNotes;
+const deleteNote = (email, noteId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+        if (!userdata) {
+            return { success: false };
+        }
+        yield prisma.notes.delete({
+            where: {
+                id: noteId,
+                userId: userdata.id
+            }
+        });
+        return { success: true };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.deleteNote = deleteNote;

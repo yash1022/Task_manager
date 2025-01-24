@@ -27,6 +27,7 @@ body {
      /* Prevent content overflow */
      overflow: hidden;
     z-index: 1000;
+   
 }
 
 /* Header styling */
@@ -85,10 +86,12 @@ header form {
 /* Task list container with scrolling */
 .mylist1 {
     width:730px;
-    max-height: calc(100% - 100px); /* Adjust based on header and input sizes */
+    max-height: calc(100% - 10px); /* Adjust based on header and input sizes */
     overflow-y: auto; /* Add vertical scroll */
     overflow-x: hidden; /* Prevent horizontal scroll */
     padding-right: 5px; /* Space for scroll bar */
+    
+    
 
 }
 
@@ -96,6 +99,7 @@ header form {
     list-style-type: none;
     padding-left:10px;
     margin: 0;
+    
 }
 
 /* Task item styling */
@@ -110,6 +114,16 @@ header form {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, background-color 0.2s ease;
     
+    
+}
+
+.todoitem
+{
+    border: 3px solid rgb(4, 3, 7)!important;
+}
+
+.mylist1::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar for Webkit browsers (Chrome, Safari, Edge) */
 }
 
 
@@ -169,7 +183,8 @@ header form {
     transition: background-color 0.3s ease, color 0.3s ease;
     font-family: "Montserrat", serif;
     align-items: center;
-    margin-left: 320px;
+    margin-left: 25px;
+    margin-bottom: -20px;
 
 
 }
