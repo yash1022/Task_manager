@@ -52,7 +52,7 @@ app.post('/api/getTasks', async(req,res)=>{
 app.post('/api/saveNotes', async(req,res)=>{
     const {title,content,email}= req.body;
 
-
+console.log({title,content,email});
   const resposne= await saveNotes(title,content,email);
 
   res.json(resposne);
