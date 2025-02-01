@@ -8,6 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    
 }
 
 /* Container styling */
@@ -23,8 +24,8 @@ body {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px #ffffff;
-    overflow: hidden; /* Prevent content overflow */
-    z-index: 1000;
+    /* overflow: hidden; Prevent content overflow */
+    
     height: 260px;
 }
 

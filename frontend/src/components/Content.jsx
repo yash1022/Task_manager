@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import '../CSS/content.css';
 import Date from "./date";
 import Todo from "./todo";
-
+import Pomodoro from "./pomodoro";
 import {Taskpopup} from "../components/Popup"
 import { authContext } from "../App";
 
@@ -82,7 +82,7 @@ function Content() {
                 </div>
                 <div className="lower-tab1">
                 <Todolist></Todolist>
-
+               <Pomodoro></Pomodoro>
                 </div>
                
          </div>
