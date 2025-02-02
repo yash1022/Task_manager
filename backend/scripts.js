@@ -113,6 +113,7 @@ const saveNotes = (title, notes, emailId) => __awaiter(void 0, void 0, void 0, f
             where: {
                 email: emailId
             }
+           
         });
         if (!userData) {
             return { success: false, message: 'USER NOT FOUND' };
@@ -123,6 +124,7 @@ const saveNotes = (title, notes, emailId) => __awaiter(void 0, void 0, void 0, f
                 content: notes,
                 userId: userData.id
             }
+
         });
         return { success: true, message: "NOTE SAVED SUCCESSFULLY" };
     }
@@ -140,7 +142,8 @@ const getNotes = (email) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield prisma.user.findUnique({
             where: {
                 email: email
-            }
+            },
+            
         });
         if (!user) {
             return { success: false, message: 'USER NOT FOUND' };
@@ -148,9 +151,13 @@ const getNotes = (email) => __awaiter(void 0, void 0, void 0, function* () {
         const notes = yield prisma.notes.findMany({
             where: {
                 userId: user.id
+            },
+            orderBy:{
+                created_at:'desc',
+
             }
         });
-        if (!notes) {
+        if (!notes|| notes.length===0) {
             return { success: false, message: 'NO NOTES FOUND' };
         }
         return { success: true, notes };

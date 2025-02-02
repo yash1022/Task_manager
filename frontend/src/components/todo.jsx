@@ -114,13 +114,13 @@ function Todo() {
                     {curTask.priority}
                 </span>
 
-                {expandedTask === curTask.id && (
+                
                             <div className="additional-info">
                                 <p>Start Date: {curTask.start_date}</p>
                                 <p>End Date: {curTask.end_date}</p>
-                                <p>Priority: {curTask.priority}</p>
+                                
                             </div>
-                        )}
+                        
                             <button className="checkbtn" 
                             onClick={(event) => {
                                 event.stopPropagation();

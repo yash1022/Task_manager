@@ -6,6 +6,7 @@ import Sidebar from './Sidebar';
 import '../CSS/txtEditor.css'
 import { authContext } from '../App';
 import { MdCheck, MdOutlineDeleteForever } from "react-icons/md";
+import { title } from 'process';
 
 export default function TxtEditor() {
 	const editorRef = useRef(null); // Create a reference for the editor container
@@ -23,6 +24,7 @@ export default function TxtEditor() {
 	
 
 	const handleSave= async(id)=>{
+    try{
           const content= quillRef.current.getText();
 
           const data =
@@ -38,21 +40,48 @@ export default function TxtEditor() {
              },
              body:JSON.stringify(data)
           })
+          const result=await response.json();
 
-          setTrigger(!trigger);
-
-          if(response)
-          {
-           
+          if(response.ok && result.success){
+            setNotes((prevNotes)=>[{
+              id:result.note.id,
+              title:Title,
+              content:content,
+  
+            },
+          ...prevNotes,
+        ])
             SetTitle('');
             handleDelete();
           }
+          else{
+            alert('Failed to save note');
+          }
+        }
+        catch(error){
+          console.error("error saving note:",error);
+          
+        }
+        
+        
+         
+
+          // setTrigger(!trigger);
 
 
-          setTrigger(!trigger);
+          // if(response)
+          // {
+           
+          //   SetTitle('');
+          //   handleDelete();
+          // }
 
+
+          // setTrigger(!trigger);
+          
 
 	}
+  
 
 	const handleDelete=()=>{
 		quillRef.current.setText('');
