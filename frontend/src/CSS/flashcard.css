@@ -13,6 +13,7 @@
 .subjects::-webkit-scrollbar {
     display: none; /* Hide the scrollbar for Webkit browsers (Chrome, Safari, Edge) */
 }
+
 .flip-card {
     background-color: transparent;
     width: 190px;
@@ -81,7 +82,7 @@
     margin-left: 60px;
   }
   
-  .inputGroup input {
+  .in {
     font-size: 100%;
     padding: 0.8em;
     outline: none;

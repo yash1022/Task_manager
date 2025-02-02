@@ -2,7 +2,7 @@ const express = require('express');
 const app= express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
-const {insert_user, createTask, getTasks, saveNotes, getNotes, deleteNote} = require("./scripts")
+const {insert_user, createTask, getTasks, saveNotes, getNotes, deleteNote, addSubject,getSubjects,addCard, getFlashcards} = require("./scripts")
 
 
 app.use(bodyParser.json());
@@ -79,6 +79,58 @@ app.delete('/api/deleteNote/:email/:id', async(req,res)=>{
     
 
 })
+
+
+app.post('/api/addSubject/:emailId', async(req,res)=>{
+    const {emailId}= req.params;
+    const {name}= req.body;
+
+    const response = await addSubject(emailId,name);
+    console.log(response);
+
+    res.json(response);
+
+})
+
+app.get('/api/getSubjects/:emailId', async(req,res)=>{
+
+       const {emailId}= req.params;
+
+       const subjects = await getSubjects(emailId);
+
+       console.log(subjects);
+       res.json(subjects);
+
+
+
+})
+
+
+app.post('/api/addCard/:emailId', async(req,res)=>{
+    const {emailId}= req.params;
+    const {question,answer,subjectId}= req.body;
+
+    const response = await addCard(emailId,question,answer,parseInt(subjectId));
+    console.log(response);
+
+    res.json(response);
+
+
+})
+
+
+app.get('/api/getflashcards/:emailId', async(req,res)=>{
+
+  const{emailId}= req.params;
+
+  const response = await getFlashcards(emailId);
+
+  console.log(response);
+
+  res.json(response);
+ })
+
+
 
 
 

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getTasks = exports.createTask = exports.insert_user = void 0;
+exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getTasks = exports.createTask = exports.insert_user = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const insert_user = (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -191,3 +191,123 @@ const deleteNote = (email, noteId) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.deleteNote = deleteNote;
+const addSubject = (email, subjectName) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+        if (!userdata) {
+            return { success: false };
+        }
+        const existingSubject = yield prisma.subjects.findFirst({
+            where: {
+                name: subjectName,
+                userid: userdata.id
+            }
+        });
+        if (existingSubject) {
+            return { success: false, message: "Subject already exists" };
+        }
+        const subject = yield prisma.subjects.create({
+            data: {
+                name: subjectName,
+                userid: userdata.id
+            }
+        });
+        return { success: true, subject: subject };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.addSubject = addSubject;
+const getSubjects = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+        if (!userdata) {
+            return { success: false, message: 'User not found' };
+        }
+        const subjects = yield prisma.subjects.findMany({
+            where: {
+                userid: userdata.id
+            }
+        });
+        return { success: true, subject: subjects };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.getSubjects = getSubjects;
+const addCard = (email, question, answer, id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+        if (!userdata) {
+            return { success: false, message: 'User not found' };
+        }
+        const card = yield prisma.flashcards.create({
+            data: {
+                question: question,
+                answer: answer,
+                subjectId: Number(id),
+                userid: userdata.id
+            }
+        });
+        if (!card) {
+            return { success: false, message: 'Error creating card' };
+        }
+        return { success: true, card: card };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.addCard = addCard;
+const getFlashcards = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+        if (!userdata) {
+            return { success: false, message: 'User not found' };
+        }
+        const flashcards = yield prisma.flashcards.findMany({
+            where: {
+                userid: userdata.id
+            }
+        });
+        return { success: true, flashcards: flashcards };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.getFlashcards = getFlashcards;

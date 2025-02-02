@@ -1,57 +1,225 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import "../CSS/flashcard.css"
 import { useState } from 'react'
+import { authContext } from '../App'
+import Alert from '@mui/material/Alert';
 
 export default function Flashcard() {
-    const [flashcards, setFlashcards] = useState([
-        { id: 1, title: 'What are the usecases of react?', content: 'React is a JavaScript library for building user interfaces.', subject: 'Web Development' },
-        { id: 2, title: 'Node.js', content: 'Node.js is a runtime environment for executing JavaScript on the server.', subject: 'Backend Development' },
-        { id: 3, title: 'MySQL', content: 'MySQL is a relational database management system.', subject: 'Database' },
-        { id: 4, title: 'CSS Grid', content: 'CSS Grid is used to create complex layouts easily.', subject: 'Web Design' },
-        { id: 5, title: 'JavaScript', content: 'JavaScript is a programming language for the web.', subject: 'Programming' },
-        { id: 6, title: 'Python', content: 'Python is a versatile programming language popular in data science.', subject: 'Programming' },
-        { id: 7, title: 'Bootstrap', content: 'Bootstrap is a CSS framework for responsive web design.', subject: 'Web Design' },
-        { id: 8, title: 'Express.js', content: 'Express.js is a web application framework for Node.js.', subject: 'Backend Development' },
-        { id: 9, title: 'MongoDB', content: 'MongoDB is a NoSQL database used for scalable applications.', subject: 'Database' },
-        { id: 10, title: 'REST APIs', content: 'REST APIs enable communication between systems using HTTP methods.', subject: 'Backend Development' },
-        { id: 11, title: 'Git', content: 'Git is a version control system for tracking changes in code.', subject: 'Version Control' },
-        { id: 12, title: 'Agile', content: 'Agile is a project management methodology for iterative development.', subject: 'Project Management' },
-        { id: 13, title: 'Machine Learning', content: 'Machine learning is a subset of AI that enables systems to learn from data.', subject: 'AI' },
-        { id: 14, title: 'Docker', content: 'Docker is a platform to develop, ship, and run applications in containers.', subject: 'DevOps' },
-        { id: 15, title: 'TypeScript', content: 'TypeScript is a superset of JavaScript that adds static typing.', subject: 'Programming' },
-    ]);
+    const [flashcards, setFlashcards] = useState([]);
+    const [auxFlashcards, setAuxFlashcards] = useState([]);
+    const [newSubject,setnewSubject] = useState('');
+    const [question, setQuestion]= useState('');
+    const [answer, setAnswer]= useState('');
+    const [subjectId,setSubjectId]= useState('');
+    const [subjectArray,setSubjectArray]= useState([]);
+    const [alert, setalert]=useState(false);
+    const Auth =useContext(authContext);
 
-    const subjects = [
-        { name: 'Web Development', count: 3 },
-        { name: 'Backend Development', count: 2 },
-        { name: 'Database', count: 2 },
-        { name: 'AI', count: 1 },
-        { name: 'DevOps', count: 1 },
-      ];
+    
+    useEffect(()=>{
+
+        getSubjects();
+        getflashcards();
+    },[])
+
+
+    const getSubjects=async()=>{
+        const response = await fetch(`http://localhost:5000/api/getSubjects/${Auth.User.email}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json'
+            }
+
+            
+
+})
+
+        const data = await response.json();
+
+       
+        
+            setSubjectArray(data.subject);
+
+            
+        
+
+      
+
+    }
+
+    const addSubject = async(name)=>{
+
+        
+
+        const response =await fetch(`http://localhost:5000/api/addSubject/${Auth.User.email}`,{
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({name})
+        })
+
+        const data = await response.json();
+           
+
+          
+          if(data.subject)
+          {
+            setSubjectArray(prev=>[...prev, data.subject]);
+          }
+           
+        setnewSubject('');
+    
+
+    }
+    
+    
+       const handleInputs=(event)=>{
+
+        if(event.target.name ==='newSubject')
+        {
+            setnewSubject(event.target.value)
+        }
+
+        else if(event.target.name ==='question')
+        {
+            setQuestion(event.target.value)
+        }
+
+        else if(event.target.name ==='answer')
+        {
+            setAnswer(event.target.value)
+        }
+
+        else{
+            setSubjectId(event.target.value)
+        }
+
+    }
+
+
+    const createCard = async()=>{
+         if(!question ||!answer ||!subjectId)
+         { 
+             setalert(true);
+             setTimeout(() => {
+                 setalert(false);
+                
+             }, 3000);
+
+             return;
+         } 
+
+        const response = await fetch(`http://localhost:5000/api/addCard/${Auth.User.email}`,{
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({question, answer, subjectId})
+          })
+
+          const data = await response.json();
+
+          if(data.card)
+          {
+            setFlashcards(prev=>[...prev, data.card]);
+            setAuxFlashcards(prev=>[...prev, data.card])
+            setQuestion('');
+            setAnswer('');
+            setSubjectId('');
+            
+          }
+    }
+
+
+    const getflashcards = async()=>{
+
+        const response = await fetch(`http://localhost:5000/api/getflashcards/${Auth.User.email}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json'
+            }
+
+        })
+
+        const data = await response.json();
+
+        setFlashcards(data.flashcards)
+        setAuxFlashcards(data.flashcards)
+
+
+
+
+    }
+
+    const findsubject= (id)=>{
+        const foundsubject = subjectArray.find(data => data.id === id);
+        return foundsubject?.name || "Not found";
+    }
+
+    const countcards =(id)=>
+    {
+        const count = flashcards.filter(data => data.subjectId===id).length;
+        return count;
+    }
+
+    const filtercards =(id)=>{
+        
+
+
+            const filtered = flashcards.filter(data=> data.subjectId===id)
+
+            if(filtered)
+            {
+                setAuxFlashcards(filtered);
+            }
+            
+          
+        
+
+    }
+
+
   return (
     <>
 
+          
+         
+
+         
+
     <Navbar></Navbar>
+
+   
 
       <div style={{display:"flex",justifyContent:'flex-start', alignItems:'center', width:'200vh',height:'95vh', paddingTop:"35px"}}>
         <Sidebar></Sidebar>
 
+             
+
           <div className='flash-box' style={{backgroundColor:"#f8f9fa",width:"800px", height:"83vh", borderRadius:"15px", marginLeft:'300px',boxShadow:"0 4px 6px rgba(0, 0, 0, 0.1)", overflowY:'scroll'}}>
+          {alert && (
+                  <Alert variant="filled" severity="error">
+                      All fields are required
+                  </Alert>
+              )}   
           <div className='flashcard-grid'>
 
-          { flashcards.map((flashcards)=>(
+          { auxFlashcards.map((data)=>(
             
-            <div class="flip-card" key={flashcards.id}>
+            <div class="flip-card" key={data.id}>
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <p class="title">{flashcards.title}</p>
-                        <p style={{marginTop:'5px', fontFamily:"Montserrat,serif"}}>{flashcards.subject}</p>
+                        <p class="title">{data.question}</p>
+                        <p style={{marginTop:'5px', fontFamily:"Montserrat,serif"}}>{findsubject(data.subjectId)}</p>
                        
                     </div>
                     <div class="flip-card-back">
-                        <p class="title">{flashcards.content}</p>
+                        <p class="title">{data.answer}</p>
                         
                     </div>
                 </div>
@@ -82,24 +250,38 @@ export default function Flashcard() {
                     <h3 style={{fontSize:'25px', fontWeight:'600', marginBottom:'10px', marginLeft:'10px',fontFamily:"Montserrat,serif"}}>Create Card</h3>
                     
 
-                      <div class="inputGroup">
-                          <input autocomplete="off" required="" type="text" placeholder='Question'/>
+                      <div className="inputGroup">
+                          <input className='in' autocomplete="off" required="" name='question'value={question} type="text" placeholder='Question' onChange={(e)=>handleInputs(e)}/>
                              
                       </div>
 
-                      <div class="inputGroup">
-                          <input autocomplete="off" required="" type="text" placeholder='Answer'/>
+                      <div className="inputGroup">
+                          <input className='in' autocomplete="off" required="" name='answer' value={answer} type="text" placeholder='Answer' onChange={(e)=>handleInputs(e)}/>
                              
                       </div>
 
 
                       
-                      <div class="inputGroup">
-                          <input autocomplete="off" required="" type="text" placeholder='Subject'/>
+                      <div className="inputGroup">
+                          <select className='in' autocomplete="off" required="" name='subject' value={subjectId} type="text" placeholder='Subject' onChange={(e)=>handleInputs(e)}>
+                            
+                            <option value="">Select Subject</option>
+                            {subjectArray.map((data) => (
+                              <option  value={data.id}>
+                                {data.name}
+                              </option>
+                            ))}
+
+                            </select>
+
+                            
+                            
+                            
+                            
                              
                       </div>
 
-                      <button className='create-btn'>
+                      <button className='create-btn' onClick={()=>createCard()}>
                           <span>
                               <svg
                                   height="24"
@@ -120,13 +302,37 @@ export default function Flashcard() {
                  </div>
 
 
-                 <div className='subjects' style={{borderRadius:'15px', width:'400px', height:'313px',backgroundColor:"#f8f9fa", boxShadow:"0 4px 6px rgba(0, 0, 0, 0.1)", marginTop:'14px', paddingTop:'10px', textAlign:'center', overflowY:'scroll'}}>
+                 <div className='subjects' style={{borderRadius:'15px', width:'400px', height:'313px',backgroundColor:"#f8f9fa", boxShadow:"0 4px 6px rgba(0, 0, 0, 0.1)", marginTop:'14px', paddingTop:'10px', textAlign:'center',overflowY:'scroll' }}>
                  <h3 style={{fontSize:'25px', fontWeight:'600', marginBottom:'10px', marginLeft:'10px',fontFamily:"Montserrat,serif"}}>Subjects</h3>
+                 
+                 <div className='addsub' style={{display:'flex',justifyContent:'flex-start', gap:'40px'}}>
 
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                          {subjects.map((subject, index) => (
-                              <div
-                                  key={index}
+                 <div class="inputGroup" style={{marginLeft:'10px'}}>
+                          <input className='in'  required="" type="text" name='newSubject' value={newSubject}  placeholder='Subject' onChange={(e)=>handleInputs(e)}/>
+                             
+                </div>
+                <button className='create-btn' onClick={()=>addSubject(newSubject)}>
+                          <span>
+                              <svg
+                                  height="24"
+                                  width="24"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                              >
+                                  <path d="M0 0h24v24H0z" fill="none"></path>
+                                  <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
+                              </svg>
+                              ADD
+                          </span>
+                      </button>
+
+                 </div>
+                
+
+                      <div  style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginTop:'15px'}}>
+                          {subjectArray?.map((data, index) => (
+                              <div onClick={()=>filtercards(data.id)}
+                                  key={data.id}
                                   style={{
                                       display: 'flex',
                                       
@@ -142,9 +348,9 @@ export default function Flashcard() {
                                       
                                   }}
                               >
-                                  <p style={{ fontSize: '18px', fontWeight: '500', margin: '0', fontFamily:"Montserrat,serif" }}>{subject.name}</p>
+                                  <p style={{ fontSize: '18px', fontWeight: '500', margin: '0', fontFamily:"Montserrat,serif" }}>{data?.name}</p>
                                   <p style={{ fontSize: '14px', color: '#6c757d', marginLeft:'4px',fontFamily:"Montserrat,serif" }}>
-                                    &bull;Cards {subject.count}
+                                    &bull;Cards {countcards(data.id)}
                                   </p>
                                  
                               </div>
@@ -157,6 +363,8 @@ export default function Flashcard() {
 
           </div>
 
+         
+
 
 
 
@@ -166,7 +374,7 @@ export default function Flashcard() {
     
     
     
-    
+     
     
     </>
    

@@ -21,7 +21,9 @@ model User{
   profile_pic    String?  
   notes          notes[]  
   events         events[]  
-  tasks          tasks[]  
+  tasks          tasks[]
+  subjects       subjects[]
+  flashcards     flashcards[]
 }
 
 
@@ -54,6 +56,27 @@ model notes{
   created_at DateTime @default(now())
   user User? @relation(fields: [userId], references: [id],onDelete:Cascade)
   userId Int
+}
+
+model subjects{
+
+  id Int @id @default(autoincrement())
+  name String @unique
+  user User @relation(fields: [userid],references: [id], onDelete:Cascade)
+  userid Int
+  flashcards flashcards[]
+
+}
+
+
+model flashcards{
+  id Int @id @default(autoincrement())
+  question String
+  answer String
+  user User @relation(fields: [userid], references: [id])
+  userid Int
+  subject subjects @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  subjectId Int 
 }
 
 

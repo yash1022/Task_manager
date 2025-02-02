@@ -268,6 +268,180 @@ catch (error) {
 }
 
 
+export const addSubject= async(email:any, subjectName:any)=>{
+
+    try{
+        const userdata= await prisma.user.findUnique({
+            where:{
+                email:email
+            }
+        })
+
+        if(!userdata)
+        {
+            return{success:false}
+        }
+
+
+        const existingSubject =await prisma.subjects.findFirst({
+            where:{
+                name:subjectName,
+                userid:userdata.id
+            }
+        })
+
+        if(existingSubject)
+        {
+            return{success:false, message:"Subject already exists"};
+        }
+
+        const subject = await prisma.subjects.create({
+             data:{
+                name:subjectName,
+                userid:userdata.id
+             }
+        })
+
+
+        return{success:true,subject:subject}
+
+}
+catch (error) {
+    console.error('Error inserting user:', error);
+    throw error;
+} finally {
+    await prisma.$disconnect();
+}
+}
+
+
+export const getSubjects= async(email:any)=>{
+    try{
+
+        const userdata =await prisma.user.findUnique({
+            where:{
+                email:email
+            }
+        })
+
+        if(!userdata)
+        {
+            return{success:false, message:'User not found'};
+        }
+
+
+        const subjects = await prisma.subjects.findMany({
+            where:{
+                userid:userdata.id
+            }
+        })
+
+        return{success:true, subject:subjects}
+
+
+
+
+
+
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+
+export const addCard = async(email:any,question:any,answer:any,id:any)=>
+{
+    try{
+
+        const userdata = await prisma.user.findUnique({
+
+            where:{
+                email:email
+            }
+        
+        })
+
+        if(!userdata)
+        {
+            return{success:false, message:'User not found'};
+        }
+
+
+        const card = await prisma.flashcards.create({
+            data:{
+                question:question,
+                answer:answer,
+                subjectId:Number(id),
+                userid:userdata.id
+            }
+        })
+
+        if(!card)
+        {
+            return{success:false, message:'Error creating card'}
+        }
+
+        return{success:true, card:card}
+
+
+        }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+export const getFlashcards= async(email:any)=>{
+
+    try {
+
+
+        const userdata = await prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        })
+
+
+        if (!userdata) {
+            return { success: false, message: 'User not found' };
+
+
+        }
+
+
+        const flashcards = await prisma.flashcards.findMany({
+            where: {
+                userid: userdata.id
+            }
+        })
+
+
+        return { success: true, flashcards: flashcards }
+
+
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+    }
+
+    
+
+
+
+
+}
+
+
 
 
 
