@@ -5,7 +5,7 @@ import LandingPage from "./components/landingpage";
 import Dashboard from "./components/Dashboard";
 import TxtEditor from "./components/TxtEditor";
 import ReadNotes from "./components/ReadNotes";
-
+import Schedule from   "./components/Schedules";
 const authContext = createContext();
 function App() {
 
@@ -24,7 +24,8 @@ function App() {
                <Route path='/notes' element={<TxtEditor></TxtEditor>}></Route>
                <Route path='/flashcard'element={<Flashcard></Flashcard>}></Route>
                <Route path='/read'element={<ReadNotes/>}></Route>
-               
+               <Route path='/schedule'element={<Schedule/>}></Route>
+
 
 
 
