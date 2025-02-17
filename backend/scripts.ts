@@ -441,6 +441,41 @@ export const getFlashcards= async(email:any)=>{
 
 }
 
+export const deleteEvent = async(emailId:any, eventId:any)=>{
+
+    try{
+
+        const userdata = await prisma.user.findUnique({
+            where: {
+                email: emailId
+            }
+        })
+    
+        if(!userdata)
+        {
+            return{success:false, message:'User not found'}
+        }
+    
+        await prisma.tasks.delete({
+            where: {
+                id: Number(eventId),
+                userId: userdata.id
+            }
+        })
+    
+        return{success:true, message:'Event deleted successfully'}
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+    }
+
+
+    
+}
+
 
 
 

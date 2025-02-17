@@ -4,6 +4,7 @@ import React, { useState, createContext } from "react";
 import LandingPage from "./components/landingpage";
 import Dashboard from "./components/Dashboard";
 import TxtEditor from "./components/TxtEditor";
+import ReadNotes from "./components/ReadNotes";
 
 const authContext = createContext();
 function App() {
@@ -22,6 +23,7 @@ function App() {
                <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
                <Route path='/notes' element={<TxtEditor></TxtEditor>}></Route>
                <Route path='/flashcard'element={<Flashcard></Flashcard>}></Route>
+               <Route path='/read'element={<ReadNotes/>}></Route>
                
 
 

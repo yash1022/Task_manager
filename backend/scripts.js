@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getTasks = exports.createTask = exports.insert_user = void 0;
+exports.deleteEvent = exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getTasks = exports.createTask = exports.insert_user = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const insert_user = (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -113,7 +113,6 @@ const saveNotes = (title, notes, emailId) => __awaiter(void 0, void 0, void 0, f
             where: {
                 email: emailId
             }
-           
         });
         if (!userData) {
             return { success: false, message: 'USER NOT FOUND' };
@@ -124,7 +123,6 @@ const saveNotes = (title, notes, emailId) => __awaiter(void 0, void 0, void 0, f
                 content: notes,
                 userId: userData.id
             }
-
         });
         return { success: true, message: "NOTE SAVED SUCCESSFULLY" };
     }
@@ -142,8 +140,7 @@ const getNotes = (email) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield prisma.user.findUnique({
             where: {
                 email: email
-            },
-            
+            }
         });
         if (!user) {
             return { success: false, message: 'USER NOT FOUND' };
@@ -151,13 +148,9 @@ const getNotes = (email) => __awaiter(void 0, void 0, void 0, function* () {
         const notes = yield prisma.notes.findMany({
             where: {
                 userId: user.id
-            },
-            orderBy:{
-                created_at:'desc',
-
             }
         });
-        if (!notes|| notes.length===0) {
+        if (!notes) {
             return { success: false, message: 'NO NOTES FOUND' };
         }
         return { success: true, notes };
@@ -318,3 +311,21 @@ const getFlashcards = (email) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getFlashcards = getFlashcards;
+const deleteEvent = (emailId, eventId) => __awaiter(void 0, void 0, void 0, function* () {
+    const userdata = yield prisma.user.findUnique({
+        where: {
+            email: emailId
+        }
+    });
+    if (!userdata) {
+        return { success: false, message: 'User not found' };
+    }
+    yield prisma.tasks.delete({
+        where: {
+            id: Number(eventId),
+            userId: userdata.id
+        }
+    });
+    return { success: true, message: 'Event deleted successfully' };
+});
+exports.deleteEvent = deleteEvent;

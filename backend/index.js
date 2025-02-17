@@ -2,7 +2,7 @@ const express = require('express');
 const app= express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
-const {insert_user, createTask, getTasks, saveNotes, getNotes, deleteNote, addSubject,getSubjects,addCard, getFlashcards} = require("./scripts")
+const {insert_user, createTask, getTasks, saveNotes, getNotes, deleteNote, addSubject,getSubjects,addCard, getFlashcards, deleteEvent} = require("./scripts")
 
 
 app.use(bodyParser.json());
@@ -129,6 +129,14 @@ app.get('/api/getflashcards/:emailId', async(req,res)=>{
 
   res.json(response);
  })
+
+ app.delete('/api/deleteEvent/:emailId/:taskId', async(req,res)=>{
+       const {emailId,taskId}= req.params;
+       const response = await deleteEvent(emailId,parseInt(taskId));
+
+       
+ }
+)
 
 
 

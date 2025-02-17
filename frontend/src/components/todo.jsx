@@ -13,6 +13,7 @@ function Todo() {
     const Auth= useContext(authContext);
     const [expandedTask, setExpandedTask] = useState(null);
 
+
     useEffect(()=>{
 
              fetchTasks(Auth.User.email)
@@ -58,10 +59,26 @@ function Todo() {
               
      }
     
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         const updatedTask = Popup_context.task.filter((curTask) => curTask.id !== id);
         Popup_context.setTask(updatedTask);
-    };
+
+        try{
+            await fetch(`http://localhost:5000/api/deleteEvent/${Auth.User.email}/${id}`,{
+                method:'DELETE',
+                headers: {
+                  'Content-Type': 'application/json',
+                  
+                },
+              
+        }
+    )
+    
+    }
+    catch(err){
+            console.log("Error deleting task", err)
+        }
+}
 
     const deleteAll = () => {
         Popup_context.setTask([]);
@@ -83,7 +100,8 @@ function Todo() {
     return (
         <div className="todocontainer1" style={{width: "730px"}}>
             <header>
-                <h5>Events</h5>
+                <h5 style={{marginLeft:'-634px'}}>Events</h5>
+                
                
                 <button type="button" className="todo-btn1" onClick={()=>{Popup_context.SetPopup(true)}}>Add Upcoming Events</button>
                 
@@ -131,7 +149,7 @@ function Todo() {
                             </button>
                             <button
                                 className="deletebtn"
-                                // onClick={() => handleDelete(curTask.id)}
+                                onClick={() => handleDelete(curTask.id)}
                             >
                                 <MdOutlineDeleteForever />
                             </button>

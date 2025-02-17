@@ -41,11 +41,12 @@
 
 
   /* From Uiverse.io by yaasiinaxmed */ 
-.save-btn {
+.save {
     --color: #0077ff;
     font-family: inherit;
     display: inline-block;
     width: 6em;
+    padding-top:1px;
     height: 2.6em;
     line-height: 2.5em;
     overflow: hidden;
@@ -63,7 +64,7 @@
     
   }
   
-  .save-btn::before {
+  .save::before {
     position: absolute;
     content: "";
     background: var(--color);
@@ -73,17 +74,17 @@
     border-radius: 50%;
   }
   
-  .save-btn:hover {
+  .save:hover {
     color: white;
   }
   
-  .save-btn:before {
+  .save:before {
     top: 100%;
     left: 100%;
     transition: 0.3s all;
   }
   
-  .save-btn:hover::before {
+  .save:hover::before {
     top: -30px;
     left: -30px;
   }
@@ -104,7 +105,7 @@
   --border-radius: 0.75rem;
   --primary-color: #7257fa;
   --secondary-color: #3c3852;
-  width: 270px;
+  width: 290px;
   font-family: "Arial";
   padding: 1rem;
   cursor: pointer;
@@ -144,7 +145,7 @@
   color: #6e6b80;
   font-size: 0.8rem;
   font-family: "Montserrat", serif;
-  margin-top: 40px;
+  margin-top: 25px;
   
 }
 
