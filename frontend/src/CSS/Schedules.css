@@ -1,0 +1,20 @@
+.main-box
+{
+    width:200vh;
+    
+    height: 83vh;
+
+    
+    display: flex;
+    justify-content:flex-start;
+    margin-top: 40px;
+    margin-left: 10px;
+
+    
+    /* gap: 300px; */
+    gap:20px;
+    
+}
+.todo-container{
+    margin-left: 350px;
+}

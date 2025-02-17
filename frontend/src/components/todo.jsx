@@ -1,84 +1,77 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MdCheck, MdOutlineDeleteForever } from "react-icons/md";
-
-
 import "../CSS/todo.css";
-import { PopContext } from "./Content";
+import { PopContext as PopContext1 } from "./Content";
 import { authContext } from "../App";
+import { PopContext2 as PopContext2 } from "./Schedules";
 
 function Todo() {
+    // Call both useContext hooks unconditionally
+    const Popup_context1 = useContext(PopContext1);
+    const Popup_context2 = useContext(PopContext2);
+    const Popup_context = Popup_context1 || Popup_context2; // Use whichever context is available
 
+    console.log("Popup_context:", Popup_context);
 
-    const Popup_context = useContext(PopContext);
-    const Auth= useContext(authContext);
+    const Auth = useContext(authContext);
     const [expandedTask, setExpandedTask] = useState(null);
 
-
-    useEffect(()=>{
-
-             fetchTasks(Auth.User.email)
-
-    },[Popup_context.update])
-
-    const fetchTasks= async (email)=>{
-        const response = await fetch('http://localhost:5000/api/getTasks',{
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  
-                },
-                body: JSON.stringify({email})
-        });
-
-
-        if(!response.ok)
-        {
-            console.log("Error fetching tasks")
-            return;
+    useEffect(() => {
+        if (Popup_context && Popup_context.update) {
+            fetchTasks(Auth.User.email);
+        } else {
+            console.error("Popup_context or Popup_context.update is undefined");
         }
+    }, [Popup_context?.update]);
 
-        const data = await response.json();
+    const fetchTasks = async (email) => {
+        try {
+            const response = await fetch("http://localhost:5000/api/getTasks", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
 
-          
-         
+            if (!response.ok) {
+                console.log("Error fetching tasks");
+                return;
+            }
 
-           sortTasks(data)    //BY START DATE
+            const data = await response.json();
 
-          
+            // Sort and set tasks if data is an array
+            if (Array.isArray(data)) {
+                sortTasks(data);
+            } else {
+                console.error("Fetched data is not an array");
+            }
+        } catch (err) {
+            console.error("Error in fetchTasks:", err);
+        }
+    };
 
-
-    }
-
-    const sortTasks = async (data)=>{
-
-        const sortedTasks = data.sort((a,b)=> new Date(a.start_date)- new Date(b.start_date))
-
+    const sortTasks = (data) => {
+        const sortedTasks = data.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
         Popup_context.setTask(sortedTasks);
+    };
 
-
-              
-     }
-    
     const handleDelete = async (id) => {
         const updatedTask = Popup_context.task.filter((curTask) => curTask.id !== id);
         Popup_context.setTask(updatedTask);
 
-        try{
-            await fetch(`http://localhost:5000/api/deleteEvent/${Auth.User.email}/${id}`,{
-                method:'DELETE',
+        try {
+            await fetch(`http://localhost:5000/api/deleteEvent/${Auth.User.email}/${id}`, {
+                method: "DELETE",
                 headers: {
-                  'Content-Type': 'application/json',
-                  
+                    "Content-Type": "application/json",
                 },
-              
+            });
+        } catch (err) {
+            console.log("Error deleting task", err);
         }
-    )
-    
-    }
-    catch(err){
-            console.log("Error deleting task", err)
-        }
-}
+    };
 
     const deleteAll = () => {
         Popup_context.setTask([]);
@@ -92,58 +85,66 @@ function Todo() {
         );
     };
 
-
-    const handleclick=(id)=>{
+    const handleclick = (id) => {
         setExpandedTask(expandedTask === id ? null : id);
-    }
+    };
 
     return (
-        <div className="todocontainer1" style={{width: "730px"}}>
+        <div className="todocontainer1" style={{ width: "730px" }}>
             <header>
-                <h5 style={{marginLeft:'-634px'}}>Events</h5>
-                
-               
-                <button type="button" className="todo-btn1" onClick={()=>{Popup_context.SetPopup(true)}}>Add Upcoming Events</button>
-                
+                <h5 style={{ marginLeft: "-634px" }}>Events</h5>
+                <button
+                    type="button"
+                    className="todo-btn1"
+                    onClick={() => {
+                        if (Popup_context && Popup_context.SetPopup) {
+                            Popup_context.SetPopup(true);
+                        } else {
+                            console.error("Popup_context.SetPopup is not defined");
+                        }
+                    }}
+                >
+                    Add Upcoming Events
+                </button>
             </header>
             <br />
             <div className="mylist1">
-
-
                 <ul>
-                    {Popup_context.task.map((curTask) => (
-                        <li  className="todoitem" key={curTask.id} onClick={()=>handleclick(curTask.id)}>
+                    {Popup_context?.task?.map((curTask) => (
+                        <li
+                            className="todoitem"
+                            key={curTask.id}
+                            onClick={() => handleclick(curTask.id)}
+                        >
                             <span className={curTask.status ? "checklist" : "notchecklist"}>
                                 {curTask.title}
                             </span>
 
-                           
-                <span
-                    className="priority1"
-                    style={{
-                        color:
-                            curTask.priority === "High"
-                                ? "red"
-                                : curTask.priority === "Medium"
-                                ? "yellow"
-                                : "green",
-                    }}
-                >   
-                    {curTask.priority}
-                </span>
+                            <span
+                                className="priority1"
+                                style={{
+                                    color:
+                                        curTask.priority === "High"
+                                            ? "red"
+                                            : curTask.priority === "Medium"
+                                            ? "yellow"
+                                            : "green",
+                                }}
+                            >
+                                {curTask.priority}
+                            </span>
 
-                
                             <div className="additional-info">
                                 <p>Start Date: {curTask.start_date}</p>
                                 <p>End Date: {curTask.end_date}</p>
-                                
                             </div>
-                        
-                            <button className="checkbtn" 
-                            onClick={(event) => {
-                                event.stopPropagation();
-                                handleCheck(curTask.id)
-                            }}
+
+                            <button
+                                className="checkbtn"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    handleCheck(curTask.id);
+                                }}
                             >
                                 <MdCheck />
                             </button>
@@ -156,11 +157,10 @@ function Todo() {
                         </li>
                     ))}
                 </ul>
-                
             </div>
-                <button className="clearbtn1" onClick={deleteAll}>
-                    Clear All
-                </button>
+            <button className="clearbtn1" onClick={deleteAll}>
+                Clear All
+            </button>
         </div>
     );
 }
