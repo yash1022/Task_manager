@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteEvent = exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getTasks = exports.createTask = exports.insert_user = void 0;
+exports.deleteEvent = exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getEvents = exports.createEvent = exports.insert_user = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const insert_user = (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -43,9 +43,9 @@ const insert_user = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.insert_user = insert_user;
-const createTask = (tasks, userEmail) => __awaiter(void 0, void 0, void 0, function* () {
+const createEvent = (tasks, userEmail) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const findExis = yield prisma.tasks.findUnique({
+        const findExis = yield prisma.events.findUnique({
             where: {
                 title: tasks.content
             }
@@ -60,7 +60,7 @@ const createTask = (tasks, userEmail) => __awaiter(void 0, void 0, void 0, funct
         });
         if (!userData)
             return { success: false, message: 'USER NOT FOUND' };
-        yield prisma.tasks.create({
+        yield prisma.events.create({
             data: {
                 title: tasks.content,
                 priority: tasks.priority,
@@ -80,8 +80,8 @@ const createTask = (tasks, userEmail) => __awaiter(void 0, void 0, void 0, funct
         yield prisma.$disconnect();
     }
 });
-exports.createTask = createTask;
-const getTasks = (email) => __awaiter(void 0, void 0, void 0, function* () {
+exports.createEvent = createEvent;
+const getEvents = (email) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userData = yield prisma.user.findUnique({
             where: {
@@ -91,12 +91,12 @@ const getTasks = (email) => __awaiter(void 0, void 0, void 0, function* () {
         if (!userData) {
             return { success: false, message: 'User not found' };
         }
-        const tasks = yield prisma.tasks.findMany({
+        const events = yield prisma.events.findMany({
             where: {
                 userId: userData.id
             }
         });
-        return tasks;
+        return events;
     }
     catch (error) {
         console.error('Error inserting user:', error);
@@ -106,7 +106,7 @@ const getTasks = (email) => __awaiter(void 0, void 0, void 0, function* () {
         yield prisma.$disconnect();
     }
 });
-exports.getTasks = getTasks;
+exports.getEvents = getEvents;
 const saveNotes = (title, notes, emailId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userData = yield prisma.user.findUnique({
@@ -312,20 +312,29 @@ const getFlashcards = (email) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.getFlashcards = getFlashcards;
 const deleteEvent = (emailId, eventId) => __awaiter(void 0, void 0, void 0, function* () {
-    const userdata = yield prisma.user.findUnique({
-        where: {
-            email: emailId
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: emailId
+            }
+        });
+        if (!userdata) {
+            return { success: false, message: 'User not found' };
         }
-    });
-    if (!userdata) {
-        return { success: false, message: 'User not found' };
+        yield prisma.events.delete({
+            where: {
+                id: Number(eventId),
+                userId: userdata.id
+            }
+        });
+        return { success: true, message: 'Event deleted successfully' };
     }
-    yield prisma.tasks.delete({
-        where: {
-            id: Number(eventId),
-            userId: userdata.id
-        }
-    });
-    return { success: true, message: 'Event deleted successfully' };
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
 });
 exports.deleteEvent = deleteEvent;

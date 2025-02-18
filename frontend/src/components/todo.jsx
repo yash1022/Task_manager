@@ -24,10 +24,11 @@ function Todo() {
         }
     }, [Popup_context?.update]);
 
-    const fetchTasks = async (email) => {
-        try {
-            const response = await fetch("http://localhost:5000/api/getTasks", {
-                method: "POST",
+    const fetchTasks= async (email)=>{
+
+        try{
+        const response = await fetch('http://localhost:5000/api/getEvents',{
+                method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -67,9 +68,13 @@ function Todo() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-            });
-        } catch (err) {
-            console.log("Error deleting task", err);
+              
+        }
+    )
+
+    }
+    catch(err){
+            console.log("Error deleting task", err)
         }
     };
 

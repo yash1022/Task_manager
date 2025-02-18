@@ -51,10 +51,10 @@ export const insert_user= async(data:any)=>{
 
 }
 
-export const createTask= async(tasks:any,userEmail:any)=>{
+export const createEvent= async(tasks:any,userEmail:any)=>{
     try
     {
-        const findExis= await prisma.tasks.findUnique({
+        const findExis= await prisma.events.findUnique({
             where:{ 
                 
                 title:tasks.content
@@ -79,7 +79,7 @@ export const createTask= async(tasks:any,userEmail:any)=>{
         if(!userData) return{success:false,message:'USER NOT FOUND'};
 
 
-            await prisma.tasks.create({
+            await prisma.events.create({
 
                 data:{
 
@@ -110,7 +110,7 @@ catch (error) {
 }
 
 
-export const getTasks = async (email:any)=>{
+export const getEvents = async (email:any)=>{
     try
     {
          const userData = await prisma.user.findUnique({
@@ -124,13 +124,13 @@ export const getTasks = async (email:any)=>{
             return{success:false, message:'User not found'};
          }
 
-         const tasks = await prisma.tasks.findMany({
+         const events = await prisma.events.findMany({
             where:{
                 userId:userData.id
             }
          })
 
-         return tasks;
+         return events;
     }
     catch (error) {
         console.error('Error inserting user:', error);
@@ -456,7 +456,7 @@ export const deleteEvent = async(emailId:any, eventId:any)=>{
             return{success:false, message:'User not found'}
         }
     
-        await prisma.tasks.delete({
+        await prisma.events.delete({
             where: {
                 id: Number(eventId),
                 userId: userdata.id

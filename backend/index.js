@@ -2,7 +2,7 @@ const express = require('express');
 const app= express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
-const {insert_user, createTask, getTasks, saveNotes, getNotes, deleteNote, addSubject,getSubjects,addCard, getFlashcards, deleteEvent} = require("./scripts")
+const {insert_user, createEvent, getEvents, saveNotes, getNotes, deleteNote, addSubject,getSubjects,addCard, getFlashcards, deleteEvent} = require("./scripts")
 
 
 app.use(bodyParser.json());
@@ -30,22 +30,22 @@ app.post('/api/auth',async (req, res) => {
 
 })
 
-app.post('/api/tasks',async (req, res) => {
+app.post('/api/events',async (req, res) => {
 
    const {tasks,userEmail}= req.body;
   
 
-   const response =await createTask(tasks,userEmail);
+   const response =await createEvent(tasks,userEmail);
    res.json(response);
 })
 
-app.post('/api/getTasks', async(req,res)=>{
+app.post('/api/getEvents', async(req,res)=>{
     const {email} = req.body;
 
-    const tasks = await getTasks(email);
+    const events = await getEvents(email);
    
 
-    res.json(tasks);
+    res.json(events);
 
 })
 

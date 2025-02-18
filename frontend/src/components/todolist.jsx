@@ -2,11 +2,31 @@ import React,{use, useState} from "react";
 import '../CSS/todolist.css';
 import { MdCheck, MdOutlineDeleteForever } from "react-icons/md";
 
+import { IoMdAddCircleOutline } from "react-icons/io";
+
 
 function Todolist(){
     const [inputValue,setInputValue]=useState({id:"",content:"",checked:false});
 
     const [task,setTask]=useState([]);
+    const [categories, setCategories] = useState(["All","Work", "Personal", "School"]);
+    const [activeCategory, setActiveCategory] = useState("");
+
+    const addCategory = () => {
+        const newCategory = prompt("Enter new category name:");
+        if (newCategory && !categories.includes(newCategory.trim())) {
+          setCategories([...categories, newCategory.trim()]);
+        } else if (categories.includes(newCategory.trim())) {
+          alert("Category already exists!");
+        }
+      };
+    
+      // Handle category click
+      const handleCategoryClick = (category) => {
+        setActiveCategory(category);
+        console.log(`Selected category: ${category}`);
+        // You can add more functionality here, like filtering tasks by category
+      };
 
     const handleInputChange=(value)=>{
         setInputValue({id:Date.now(),content:value,checked:false});
@@ -50,22 +70,58 @@ function Todolist(){
 
     return (
         <div className="todocontainer" style={{width: "500px"}}>
-            <header>
+           
+              <h5>TO-DO LIST </h5>
+
+              <div className="categories" style={{width:'100%',display: "flex", alignItems: "center", gap: "10px", marginTop: "10px", overflowX:'scroll' }}>
+        {/* Add Category Button */}
+
+        <IoMdAddCircleOutline onClick={addCategory} size={30} color="gray" />
+       
+
+
+        {/* Categories */}
+        <div style={{ display: "flex", gap: "15px" }}>
+          {categories.map((category, index) => (
+            <span
+              key={index}
+              onClick={() => handleCategoryClick(category)}
+              style={{
+                padding: "5px 10px",
+                border: "1px solid #ccc",
+                borderRadius: "15px",
+                cursor: "pointer",
+                backgroundColor: activeCategory === category ? "#007bff" : "transparent",
+                color: activeCategory === category ? "#fff" : "#000",
+              }}
+            >
+              {category}
+            </span>
+          ))}
+        </div>
+      </div>
+
+              
+
+
+
+
+
+        </div>
+    );
+}
+
+export default Todolist;
+
+
+
+ {/* <header>
                 <h5>To-do List</h5>
-                <form onSubmit={handleFormSubmit}>
-                    <div>
-                        <input
-                            type="text"
-                            className="todo-input"
-                            autoComplete="off"
-                            value={inputValue.content}
-                            onChange={(event) => handleInputChange(event.target.value)}
-                        />
-                    </div>
+                
                     <div>
                         <button type="submit" className="todo-btn">Add Task</button>
                     </div>
-                </form>
+                
             </header>
             <br />
             <div className="mylist">
@@ -90,9 +146,4 @@ function Todolist(){
                 <button className="clearbtn" onClick={deleteAll}>
                     Clear All
                 </button>
-            </div>
-        </div>
-    );
-}
-
-export default Todolist;
+            </div> */}
