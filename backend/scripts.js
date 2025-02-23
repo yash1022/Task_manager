@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteEvent = exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getEvents = exports.createEvent = exports.insert_user = void 0;
+exports.deleteTask = exports.updateStatus = exports.getTasks = exports.addTask = exports.getCategory = exports.addCategory = exports.deleteEvent = exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getEvents = exports.createEvent = exports.insert_user = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const insert_user = (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -338,3 +338,164 @@ const deleteEvent = (emailId, eventId) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.deleteEvent = deleteEvent;
+const addCategory = (name, emailId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: emailId
+            }
+        });
+        if (!userdata) {
+            return { success: false, message: 'User not found' };
+        }
+        yield prisma.category.create({
+            data: {
+                name: name,
+                userId: userdata.id
+            }
+        });
+        return { success: true, message: 'Category added successfully' };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.addCategory = addCategory;
+const getCategory = (emailId) => __awaiter(void 0, void 0, void 0, function* () {
+    const userdata = yield prisma.user.findUnique({
+        where: {
+            email: emailId
+        }
+    });
+    if (!userdata) {
+        return { success: false, message: 'User not found' };
+    }
+    const categories = yield prisma.category.findMany({
+        where: {
+            userId: userdata.id
+        }
+    });
+    if (!categories) {
+        return { success: false, message: 'No categories found' };
+    }
+    return categories;
+});
+exports.getCategory = getCategory;
+const addTask = (name, startDate, endDate, category, emailId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: emailId
+            }
+        });
+        const categoryId = yield prisma.category.findUnique({
+            where: {
+                name: category
+            }
+        });
+        if (!userdata) {
+            return { success: false, message: 'User not found' };
+        }
+        if (!categoryId) {
+            return { success: false, message: 'Category not found' };
+        }
+        yield prisma.tasks.create({
+            data: {
+                title: name,
+                start_date: startDate,
+                end_date: endDate,
+                categoryId: categoryId.id,
+                userID: userdata.id
+            }
+        });
+        return { success: true, message: 'Task added successfully' };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.addTask = addTask;
+const getTasks = (emailId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userdata = yield prisma.user.findUnique({
+            where: {
+                email: emailId
+            }
+        });
+        if (!userdata) {
+            return { success: false, message: 'User not found' };
+        }
+        const tasks = yield prisma.tasks.findMany({
+            where: {
+                userID: userdata.id
+            }
+        });
+        if (!tasks) {
+            return { success: false, message: 'No tasks found' };
+        }
+        return tasks;
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.getTasks = getTasks;
+const updateStatus = (id, status) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const task = yield prisma.tasks.findUnique({
+            where: {
+                id: Number(id)
+            }
+        });
+        if (!task) {
+            return { success: false, message: 'Task not found' };
+        }
+        const updated = yield prisma.tasks.update({
+            where: {
+                id: Number(id)
+            },
+            data: {
+                status: !status
+            }
+        });
+        return { success: true, message: 'Task status updated successfully', updated };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.updateStatus = updateStatus;
+const deleteTask = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield prisma.tasks.delete({
+            where: {
+                id: Number(id)
+            }
+        });
+        return { success: true, message: 'Taskk deleted successfully' };
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.deleteTask = deleteTask;

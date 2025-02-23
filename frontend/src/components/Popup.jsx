@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import "../CSS/taskpopup.css"
+import "../CSS/eventpopup.css"
 import { PopContext } from './Content'
 import { authContext } from '../App';
 

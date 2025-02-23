@@ -1,6 +1,6 @@
 import React from "react";
 import "../CSS/Navbar.css";
-import  { useContext, useState } from 'react';
+import  { useContext, useState, useEffect } from 'react';
 import {auth,provider} from "../config/firebaseconfig"
 import {signInWithPopup, signOut} from 'firebase/auth';
 import{authContext} from '../App'
@@ -8,15 +8,17 @@ import{authContext} from '../App'
 
 
 
+
 const Navbar = () => {
 
   const Auth= useContext(authContext);
-    
+
+ 
 
    const signInWithGoogle= async(e)=>{
         e.preventDefault();
         signInWithPopup(auth,provider).then(async(result)=>{
-          if(result)
+          if(result && result.user)
             {
                 console.log("User has signed in",result.user);
                 alert(`welcome ${result.user.displayName}`);
@@ -27,11 +29,16 @@ const Navbar = () => {
             }
 
 
+           
+
             const userdata={  
-                email: result.user.email,
+                email: result.user?.email,
                 displayName: result.user.displayName,
                 photoURL: result.user.photoURL
             }
+
+
+           
       
       
             try

@@ -477,6 +477,252 @@ export const deleteEvent = async(emailId:any, eventId:any)=>{
 }
 
 
+export const addCategory = async(name:any, emailId:any)=>{
+
+    try{
+
+        const userdata= await prisma.user.findUnique({
+            where:{
+                email:emailId
+            }
+        })
+    
+        if(!userdata)
+        {
+            return{success:false, message:'User not found'}
+        }
+    
+    
+          await prisma.category.create({
+            data:{
+                name:name,
+                userId:userdata.id
+            }
+        })
+    
+        return{success:true, message:'Category added successfully'}
+    
+
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+    }
+
+
+    
+
+
+}
+
+
+ export const getCategory = async(emailId:any)=>{
+
+      const userdata= await prisma.user.findUnique({
+
+          where:{
+              email:emailId
+          }
+        
+        })
+
+        if(!userdata)
+            {
+              return{success:false, message:'User not found'}
+            }
+
+
+        const categories = await prisma.category.findMany({
+        
+            where:{
+                userId:userdata.id
+            }
+        })
+
+
+        if(!categories)
+        {
+            return{success:false, message:'No categories found'}
+        }
+
+
+        return categories
+
+
+
+}
+
+export const addTask = async(name:any,startDate:any, endDate:any,category:any, emailId:any)=>{
+
+
+    try
+    {
+        const userdata= await prisma.user.findUnique({
+            where:{
+                email:emailId
+            }
+        })
+
+        const categoryId= await prisma.category.findUnique({
+
+            where:{
+                name:category
+            }
+        })
+
+        if(!userdata)
+        {
+            return{success:false, message:'User not found'}
+        }
+
+        if(!categoryId)
+        {
+            return{success:false, message:'Category not found'}
+        }
+
+        
+
+        await prisma.tasks.create({
+            data:{
+                title:name,
+                start_date:startDate,
+                end_date:endDate,
+                categoryId:categoryId.id,
+                userID:userdata.id
+            }
+        })
+
+        return{success:true, message:'Task added successfully'}
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+
+export const getTasks = async(emailId:any)=>{
+
+    try{
+    
+    const userdata= await prisma.user.findUnique({
+        where:{
+            email:emailId
+        }
+
+    })
+
+    if(!userdata)
+    {
+        return{success:false, message:'User not found'}
+    }
+
+
+    const tasks = await prisma.tasks.findMany({
+        where:{
+            userID:userdata.id
+        }
+    })
+
+
+    if(!tasks)
+    {
+        return{success:false, message:'No tasks found'}
+    }
+
+    return tasks
+
+}
+catch (error) {
+    console.error('Error inserting user:', error);
+    throw error;
+} finally {
+    await prisma.$disconnect();
+}
+
+
+
+}
+
+
+export const updateStatus = async(id:any,status:any)=>{
+
+
+    try{
+
+
+    const task = await prisma.tasks.findUnique({
+        where:{
+            id:Number(id)
+        }
+    })
+
+    if(!task)
+    {
+        return{success:false, message:'Task not found'}
+    }
+
+    const updated= await prisma.tasks.update({
+        where:{
+            id:Number(id)
+        },
+
+        data:{
+            status:!status
+        }
+    })
+
+    return{success:true, message:'Task status updated successfully',updated}
+
+
+}
+catch (error) {
+    console.error('Error inserting user:', error);
+    throw error;
+} finally {
+    await prisma.$disconnect();
+}
+
+}
+
+
+
+export const deleteTask = async(id:any)=>{
+
+  try
+  {
+
+
+       await prisma.tasks.delete({
+        where:{
+            id:Number(id)
+        }
+    })
+
+   return {success:true, message:'Taskk deleted successfully'}
+
+  }
+
+  catch (error) {
+    console.error('Error inserting user:', error);
+    throw error;
+} finally {
+    await prisma.$disconnect();
+}
+
+    
+
+
+
+
+
+}
+
+
 
 
 

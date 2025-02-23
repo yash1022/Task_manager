@@ -20,8 +20,9 @@ const Sidebar = () => {
       <div className="sidebar-buttons">
         <button className="neu-button" onClick={()=>{navigate('/dashboard')}}>Dashboard</button>
         <button className="neu-button" onClick={()=>{navigate('/notes')}}>Notes</button>
-        <button className="neu-button" onClick={()=>{navigate('/schedule')}}>Schedules</button>
+        <button className="neu-button" onClick={()=>{navigate('/schedule')}}>Events</button>
         <button className="neu-button" onClick={()=>{navigate('/flashcard')}}>Flashcards</button>
+        <button className="neu-button" onClick={()=>{navigate('/info')}}>Info</button>
       </div>
 
 

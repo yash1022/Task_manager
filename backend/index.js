@@ -2,7 +2,8 @@ const express = require('express');
 const app= express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
-const {insert_user, createEvent, getEvents, saveNotes, getNotes, deleteNote, addSubject,getSubjects,addCard, getFlashcards, deleteEvent} = require("./scripts")
+const {insert_user, createEvent, getEvents, saveNotes, getNotes, deleteNote, addSubject,getSubjects,addCard, getFlashcards, deleteEvent,
+addCategory, getCategory, addTask, getTasks,updateStatus, deleteTask} = require("./scripts")
 
 
 app.use(bodyParser.json());
@@ -98,7 +99,7 @@ app.get('/api/getSubjects/:emailId', async(req,res)=>{
 
        const subjects = await getSubjects(emailId);
 
-       console.log(subjects);
+      
        res.json(subjects);
 
 
@@ -125,7 +126,7 @@ app.get('/api/getflashcards/:emailId', async(req,res)=>{
 
   const response = await getFlashcards(emailId);
 
-  console.log(response);
+ 
 
   res.json(response);
  })
@@ -137,6 +138,86 @@ app.get('/api/getflashcards/:emailId', async(req,res)=>{
        
  }
 )
+
+
+app.post('/api/saveCategory/:emailId', async(req,res)=>{
+    const {emailId}= req.params;
+    const {category}= req.body;
+
+    const response = await addCategory(category,emailId);
+    
+    res.json(response);
+})
+
+app.get('/api/getCategory/:emailId', async(req,res)=>{
+
+    const {emailId}= req.params;
+
+    const response = await getCategory(emailId);
+    console.log(response);
+    
+    res.json(response);
+
+})
+
+app.post('/api/saveTask/:emailId', async(req,res)=>{
+
+    const {emailId}= req.params;
+    const {name, startDate,endDate, category}= req.body;
+   
+
+    const response = await addTask(name,startDate,endDate, category,emailId);
+   
+    res.json(response);
+
+})
+
+app.get('/api/getTasks/:emailId', async(req,res)=>{
+
+   
+
+
+    const {emailId}= req.params;
+
+    const response = await getTasks(emailId);
+
+    console.log(response);
+    
+    res.json(response);
+
+
+
+
+
+})
+
+
+app.patch('/api/updateStatus/:id', async(req,res)=>{
+
+    const {id}= req.params;
+    const {status}= req.body;
+
+    const response= await updateStatus(id,status);
+
+    // console.log({ ...response, updated: { status: response.updated.status } });
+
+    res.json(response.updated.status);
+
+
+    
+})
+
+
+app.delete('/api/deleteTask/:id', async(req,res)=>{
+   
+    const {id}= req.params;
+    const response = await deleteTask(parseInt(id));
+    res.json(response);
+ })
+
+ 
+
+
 
 
 

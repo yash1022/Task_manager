@@ -24,6 +24,7 @@ model User{
   tasks          tasks[]
   subjects       subjects[]
   flashcards     flashcards[]
+  categories     category[]
 }
 
 
@@ -31,6 +32,8 @@ model category{
 
   id Int @id @default(autoincrement())
   name String @unique
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
   tasks tasks[]
 
  

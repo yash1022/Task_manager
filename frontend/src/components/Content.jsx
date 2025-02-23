@@ -6,8 +6,12 @@ import Pomodoro from "./pomodoro";
 import { Taskpopup } from "../components/Popup";
 import { authContext } from "../App";
 import Todolist from "./todolist";
+import EventPopup from "./EventPopup"
+import TaskInfo from "./TaskInfo";
 
 const PopContext = createContext();
+const TaskContext= createContext();
+const Readcontext = createContext(null);
 
 function Content() {
   const [Popup, SetPopup] = useState(false);
@@ -20,6 +24,13 @@ function Content() {
   });
   const [task, setTask] = useState([]);
   const [update, setUpdate] = useState('false');
+
+
+  const [TaskPopup,SetTaskPopup] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("");
+  const [ReadPopup, SetReadPopup]= useState(false);
+  const [data, setData] = useState({})
+
   const Auth = useContext(authContext);
 
   return (
@@ -27,7 +38,7 @@ function Content() {
       <div className="contentcontainer">
         <div className="upper-tab">
           <div className="name">
-            {"Welcome, " + Auth.User.displayName || "User"}
+            {"Welcome, " + Auth.User?.displayName || "User"}
           </div>
           <div className="time">
             <Date />
@@ -61,7 +72,24 @@ function Content() {
         </div>
 
         <div className="lower-tab1">
-          <Todolist />
+          {
+            TaskPopup && (<TaskContext.Provider value={{ TaskPopup, SetTaskPopup, activeCategory,setActiveCategory}}>
+              <EventPopup></EventPopup>
+                  </TaskContext.Provider>)
+          }
+
+          {
+            ReadPopup && (<Readcontext.Provider value={{SetReadPopup,data}}>
+              <TaskInfo></TaskInfo>
+                  </Readcontext.Provider>)
+
+
+
+          }
+          <TaskContext.Provider value={{ TaskPopup, SetTaskPopup, activeCategory, setActiveCategory,SetReadPopup,setData}}>
+              <Todolist />
+          </TaskContext.Provider>
+          
           <Pomodoro />
         </div>
       </div>
@@ -70,4 +98,4 @@ function Content() {
 }
 
 export default Content;
-export { PopContext };
+export { PopContext, TaskContext, Readcontext };

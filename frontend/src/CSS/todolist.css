@@ -10,7 +10,9 @@ body {
 
     min-height: 100vh;
 }
-
+.taskbox::-webkit-scrollbar {
+    display: none; 
+  }
 /* Container styling */
 .todocontainer {
     display: flex;
@@ -186,5 +188,14 @@ header form {
     flex: 0 0 100px; /* Fixed width for alignment */
     text-align: center;
     
+}
+
+.check{
+    text-decoration: line-through;
+}
+
+.notcheck
+{
+    text-decoration: none;
 }
 
