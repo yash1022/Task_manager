@@ -67,6 +67,7 @@ const createEvent = (tasks, userEmail) => __awaiter(void 0, void 0, void 0, func
                 start_date: tasks.startDate,
                 end_date: tasks.endDate,
                 status: tasks.completed,
+                description: tasks.description,
                 userId: userData.id
             }
         });

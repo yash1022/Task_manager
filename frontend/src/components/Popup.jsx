@@ -42,7 +42,7 @@ export  function Taskpopup({onclose}) {
 
       if(response.ok)
       {
-        alert('Success')
+        
       }
 
        
@@ -59,6 +59,7 @@ export  function Taskpopup({onclose}) {
         checked: false,
         startDate: "",
         endDate: "",
+        description:"",
         priority: "Low",
       });
       taskData.update?(taskData.setUpdate(false)):(taskData.setUpdate(true));
@@ -113,6 +114,22 @@ export  function Taskpopup({onclose}) {
               required
             />
           </div>
+
+
+          <div className="form-group">
+            <label htmlFor="description">Description:</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              value={taskData.inputValue.description}
+              onChange={handleChange}
+              
+            />
+          </div>
+
+
+          
 
           <div className="form-group">
             <label htmlFor="priority">Priority:</label>

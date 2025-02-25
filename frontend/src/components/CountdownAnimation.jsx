@@ -52,13 +52,17 @@ const CountdownAnimation = ({key, timer, animate, children}) => {
           ['14b0bf', 0.33],
         ]}
         strokeWidth={6}
-        size={220}
+        size={200}
         trailColor="powderblue"
         onComplete={ () => {
           stopAimate()
           notifyUser();
         }}
+
+        
+        
       >
+        
         {children}
       </CountdownCircleTimer>
     )

@@ -4,9 +4,9 @@ import { SettingsContext } from '../context/SettingsContext'
 const SetPomodoro = () => {
 
     const [newTimer, setNewTimer] = useState({
-        work: 0.2,
-        short: 0.1,
-        long: 0.5,
+        work: 0.0,
+        short: 10.0,
+        long: 30.0,
         active: 'work'
     })
 
@@ -40,14 +40,16 @@ const SetPomodoro = () => {
         updateExecute(newTimer)
     }
     return (
-        <div className="form-container">
+        <div className="form-container" style={{marginTop:'-25px'}}>
+            <h2 style={{fontFamily:"Montserrat,serif"}}>Pomodoro</h2>
+            <medium style={{fontFamily:"Montserrat,serif"}}>Be productive the right way.</medium>
             <form noValidate onSubmit={handleSubmit}>
                 <div className="input-wrapper">
                     <input className="input" type="number" name="work" onChange={handleChange} value={newTimer.work} />
                     <input className="input" type="number" name="shortBreak" onChange={handleChange} value={newTimer.short} />
                     <input className="input" type="number" name="longBreak" onChange={handleChange} value={newTimer.long} />
                 </div>
-                <button type='submit'>Set Timer</button>
+                <button type='submit' style={{fontFamily:"Montserrat,serif"}}>Set Timer</button>
             </form>
         </div>
     )

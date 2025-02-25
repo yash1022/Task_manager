@@ -20,10 +20,12 @@ function Content() {
     checked: false,
     startDate: "",
     endDate: "",
+    description:"",
     priority: "Low",
   });
   const [task, setTask] = useState([]);
   const [update, setUpdate] = useState('false');
+  
 
 
   const [TaskPopup,SetTaskPopup] = useState(false);
@@ -36,7 +38,7 @@ function Content() {
   return (
     <div>
       <div className="contentcontainer">
-        <div className="upper-tab">
+        <div className="upper-tab" style={{ zIndex:'1001'}}>
           <div className="name">
             {"Welcome, " + Auth.User?.displayName || "User"}
           </div>
@@ -45,7 +47,7 @@ function Content() {
           </div>
         </div>
 
-        <div className="lower-tab1">
+        <div className="lower-tab1" >
           {Popup && (
             <PopContext.Provider value={{ Popup, SetPopup, inputValue, setInputValue, task, setTask, update, setUpdate }}>
               <Taskpopup onclose={() => SetPopup(false)} />

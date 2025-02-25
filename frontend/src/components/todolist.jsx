@@ -271,7 +271,7 @@ catch(e)
            
               <h5>Tasks</h5>
 
-              <div className="categories" style={{width:'100%',display: "flex", alignItems: "center", gap: "10px", marginTop: "10px", overflowX:'scroll', justifyContent:'flex-start' }}>
+              <div className="categories" style={{width:'100%',display: "flex", alignItems: "center", gap: "10px", overflowX:'scroll', justifyContent:'flex-start' }}>
         {/* Add Category Button */}
 
         <IoMdAddCircleOutline onClick={addCategory} size={30} color="gray"
@@ -326,19 +326,20 @@ catch(e)
            
       </div>
 
-      <div style={{marginLeft:'-456px', marginTop:'10px'}}>
+      <div style={{marginLeft:'-395px', marginTop:'10px', display:'flex', gap:'5px', alignItems:"center", marginBottom:'10px'}}>
 
       <MdOutlinePlaylistAddCircle  size={30} color="gray" onClick={()=>{Popup.SetTaskPopup(true)}}/>
+        <p style={{color:'gray',  fontFamily:"Montserrat,serif"}}>Add task</p>
 
 
       </div>
 
-      <p style={{marginLeft:'-430px', marginTop:'10px', color:'gray',fontFamily:"Montserrat,serif"  }}>Active</p>
+      
 
       <hr style={{width:'480px', marginLeft:'-1px'}}/>
 
 
-      <div  className="taskbox" style={{height:'150px',width:'500px', marginTop:'10px', paddingLeft:'20px', overflowY:'scroll'}}>
+      <div  className="taskbox" style={{height:'250px',width:'500px', marginTop:'10px', paddingLeft:'20px', overflowY:'scroll'}}>
 
       {Auxiliary.map((task, index) => (
         <div  style={{
@@ -352,7 +353,7 @@ catch(e)
           marginBottom: '10px',
           borderRadius: '5px'
         }} onClick={()=>Popup.SetReadPopup(true)}>
-          <input type="checkbox" checked={task.status} style={{ marginRight: '10px' }} onClick={()=>handleCheck(task.id)} />
+          <input type="checkbox" checked={task.status} style={{ marginRight: '10px' }} onClick={(event)=> {event.stopPropagation();handleCheck(task.id)}} />
           <span className={task.status?"check":"notcheck"}  style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis',fontFamily:"Montserrat,serif"  }}>{task.title}</span>
           <span style={{marginLeft:'auto',marginRight:'10px',fontFamily:"Montserrat,serif"}}>Due: {formatDate(task.end_date)}</span>
           <MdOutlineDeleteForever onClick={()=>handleDelete(task.id)} />
@@ -367,9 +368,7 @@ catch(e)
 
       </div>
 
-      <p style={{marginLeft:'-430px', marginTop:'10px', color:'gray',fontFamily:"Montserrat,serif"  }}>Done</p>
-
-      <hr style={{width:'480px', marginLeft:'-1px'}}/>
+     
      
 
               

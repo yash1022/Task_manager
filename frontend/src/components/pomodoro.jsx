@@ -19,19 +19,20 @@ function Pomodoro(){
         useEffect(() => {updateExecute(executing)}, [executing, startAnimate])
     
       return (
-        <div className="pomodoro-container">
-          <h2>Pomodoro</h2>
-          <medium>Be productive the right way.</medium>
+        <div className="pomodoro-container" style={{marginTop:'-1px', marginLeft:'-5px '}}>
+          
           <br />
           <br />
           {pomodoro !== 0 ?
           <>
-            <ul className="labels">
+            <ul className="labels" style={{marginTop:'-40px'}}>
               <li>
                 <Button 
+                  
                   title="Work" 
                   activeClass={executing.active === 'work' ? 'active-label' : undefined} 
                   _callback={() => setCurrentTimer('work')} 
+                  
                 />
               </li>
               <li>
@@ -48,8 +49,12 @@ function Pomodoro(){
                   _callback={() => setCurrentTimer('long')} 
                 />
               </li>
+
+              <li>
+              <Button title="Settings" _callback={SettingsBtn} />
+              </li>
             </ul>
-            <Button title="Settings" _callback={SettingsBtn} />
+            
             <br />
             <div className="timer-container">
               <div className="time-wrapper">

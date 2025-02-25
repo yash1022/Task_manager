@@ -3,26 +3,27 @@ import { MdCheck, MdOutlineDeleteForever } from "react-icons/md";
 import "../CSS/todo.css";
 import { PopContext as PopContext1 } from "./Content";
 import { authContext } from "../App";
-import { PopContext2 as PopContext2 } from "./Schedules";
+
+import { MdOutlinePlaylistAddCircle } from "react-icons/md";
 
 function Todo() {
     // Call both useContext hooks unconditionally
     const Popup_context1 = useContext(PopContext1);
-    const Popup_context2 = useContext(PopContext2);
-    const Popup_context = Popup_context1 || Popup_context2; // Use whichever context is available
-
-    console.log("Popup_context:", Popup_context);
-
+   
+    const Popup_context = Popup_context1// Use whichever context is available
     const Auth = useContext(authContext);
-    const [expandedTask, setExpandedTask] = useState(null);
+    
 
     useEffect(() => {
-        if (Popup_context && Popup_context.update) {
+      
             fetchTasks(Auth.User.email);
-        } else {
-            console.error("Popup_context or Popup_context.update is undefined");
-        }
+       
     }, [Popup_context?.update]);
+
+    const formatDate = (dateString) => {
+        const options = { day: '2-digit', month: 'short' };
+        return new Date(dateString).toLocaleDateString('en-GB', options);
+      };
 
     const fetchTasks= async (email)=>{
 
@@ -78,10 +79,7 @@ function Todo() {
         }
     };
 
-    const deleteAll = () => {
-        Popup_context.setTask([]);
-    };
-
+  
     const handleCheck = (id) => {
         Popup_context.setTask((prevTasks) =>
             prevTasks.map((task) =>
@@ -90,37 +88,37 @@ function Todo() {
         );
     };
 
-    const handleclick = (id) => {
-        setExpandedTask(expandedTask === id ? null : id);
-    };
-
     return (
-        <div className="todocontainer1" style={{ width: "730px" }}>
+        <div className="todocontainer1" style={{ width: "700px" }}>
             <header>
-                <h5 style={{ marginLeft: "-634px" }}>Events</h5>
-                <button
-                    type="button"
-                    className="todo-btn1"
-                    onClick={() => {
-                        if (Popup_context && Popup_context.SetPopup) {
-                            Popup_context.SetPopup(true);
-                        } else {
-                            console.error("Popup_context.SetPopup is not defined");
-                        }
-                    }}
-                >
-                    Add Upcoming Events
-                </button>
+                <h5 >Events</h5>
+                  <div style={{marginLeft:'-300px',marginTop:'-20px',display:'flex',alignItems:'center',gap:'4px'}}>
+                 
+                       <MdOutlinePlaylistAddCircle  size={30} color="gray" onClick={()=>Popup_context.SetPopup(true)}/>
+                       <p style={{color:'gray',fontFamily:"Montserrat,serif"}}>Add event</p>
+                  </div>
             </header>
-            <br />
+            <hr style={{width:'650px', marginLeft:'-40px', marginTop:'7px', marginBottom:"10px"}}></hr>
+            
             <div className="mylist1">
-                <ul>
+                <ul >
                     {Popup_context?.task?.map((curTask) => (
                         <li
                             className="todoitem"
                             key={curTask.id}
-                            onClick={() => handleclick(curTask.id)}
+
+                            style={{ height: '45px',
+                                width: '680px',
+                                backgroundColor: '#f5f5f5',
+                                borderLeft: '4px solid blue',
+                                display: 'flex',
+                                alignItems: 'center',
+                                padding: '0 10px',
+                                marginBottom: '10px',
+                                borderRadius: '5px'}}
+                            
                         >
+                             <input type="checkbox" checked={curTask.status} style={{ marginRight: '10px' }} onClick={(event)=> {event.stopPropagation();handleCheck(curTask.id)}} />
                             <span className={curTask.status ? "checklist" : "notchecklist"}>
                                 {curTask.title}
                             </span>
@@ -132,19 +130,19 @@ function Todo() {
                                         curTask.priority === "High"
                                             ? "red"
                                             : curTask.priority === "Medium"
-                                            ? "yellow"
+                                            ? "blue"
                                             : "green",
                                 }}
                             >
                                 {curTask.priority}
                             </span>
 
-                            <div className="additional-info">
-                                <p>Start Date: {curTask.start_date}</p>
-                                <p>End Date: {curTask.end_date}</p>
+                            <div className="additional-info" style={{display:'flex',gap:'12px'}}>
+                                <p style={{fontFamily:"Montserrat,serif"}}>From: {formatDate(curTask.start_date)}</p>
+                                <p style={{fontFamily:"Montserrat,serif"}}>To: {formatDate(curTask.end_date)}</p>
                             </div>
 
-                            <button
+                            {/* <button
                                 className="checkbtn"
                                 onClick={(event) => {
                                     event.stopPropagation();
@@ -152,10 +150,12 @@ function Todo() {
                                 }}
                             >
                                 <MdCheck />
-                            </button>
+                            </button> */}
                             <button
                                 className="deletebtn"
-                                onClick={() => handleDelete(curTask.id)}
+
+                                onClick={()=>handleDelete(curTask.id)}
+                               
                             >
                                 <MdOutlineDeleteForever />
                             </button>
@@ -163,9 +163,7 @@ function Todo() {
                     ))}
                 </ul>
             </div>
-            <button className="clearbtn1" onClick={deleteAll}>
-                Clear All
-            </button>
+          
         </div>
     );
 }

@@ -91,6 +91,8 @@ header form {
     overflow-y: auto; /* Add vertical scroll */
     overflow-x: hidden; /* Prevent horizontal scroll */
     padding-right: 5px; /* Space for scroll bar */
+    padding-left: 15px;
+    
     
     
 
@@ -100,11 +102,14 @@ header form {
     list-style-type: none;
     padding-left:10px;
     margin: 0;
+
+    
+    
     
 }
 
 /* Task item styling */
-.todoitem1 {
+/* .todoitem {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -112,16 +117,16 @@ header form {
     margin-bottom: 8px;
     border-radius: 5px;
     background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, background-color 0.2s ease;
+   
     
     
-}
+    
+} */
 
-.todoitem
+/* .todoitem
 {
     border: 3px solid rgb(4, 3, 7)!important;
-}
+} */
 
 .mylist1::-webkit-scrollbar {
     display: none; /* Hide the scrollbar for Webkit browsers (Chrome, Safari, Edge) */

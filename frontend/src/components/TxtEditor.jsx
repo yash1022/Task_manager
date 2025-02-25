@@ -166,7 +166,7 @@ useEffect(() => {
 		<>
 		<Navbar></Navbar>
 		<div className='main-box'>
-			<div className='side-bar'>
+			<div>
 			<Sidebar></Sidebar>
 			</div>
              

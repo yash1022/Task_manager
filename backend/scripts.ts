@@ -88,6 +88,7 @@ export const createEvent= async(tasks:any,userEmail:any)=>{
                 start_date:tasks.startDate,
                 end_date:tasks.endDate,
                 status:tasks.completed,
+                description:tasks.description,
                 userId:userData.id
 
                 }

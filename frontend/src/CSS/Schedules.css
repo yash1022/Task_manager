@@ -15,6 +15,50 @@
     gap:20px;
     
 }
-.todo-container{
-    margin-left: 350px;
+.side-bar
+{
+    width:280px;
+    height: 400px;
+    margin-top: 15px;
+   
 }
+
+
+/* .box-container {
+    display: flex;
+    gap: 20px;
+    align-items:first baseline;
+    
+    width:1200px;
+    margin-top: 18px;
+    background-color: black;
+  } */
+  
+  .box {
+    min-height: 615px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 18px;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: flex-start; 
+    padding: 10px; 
+    box-sizing: border-box; */
+    padding: 20px; 
+    box-sizing: border-box;
+
+  }
+  
+  .box-1 {
+   width: 800px;
+    background-color:#f8f9fa;
+    
+  }
+  
+  .box-2 {
+    width: 360px;
+    background-color:#f8f9fa;
+    /* display: none; */
+  }
+  

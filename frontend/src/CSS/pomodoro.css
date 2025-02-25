@@ -6,7 +6,7 @@
     width: 45%;
     margin: 30px;
     margin-bottom: 30px;
-    height: 500px; /* Fixed height */
+    height: 350px; /* Fixed height */
     padding: 20px;
     background-color: #ffffff;
     border-radius: 10px;
@@ -52,13 +52,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 15rem;
-  width: 15rem;
+  height: 14rem;
+  width: 14rem;
   border-radius: 7.5rem;
   color:#efefef;
   background: #1c1d23;
   font-size: 3.5rem;
-  box-shadow: 1rem 1.5rem 2rem rgba(86, 86, 86, 0.6)
+  
 }
 
 .button-wrapper {
