@@ -83,7 +83,7 @@ function LandingPage() {
 
   <div class="f-1">
     <div className="para">
-      <p className="heading">Got a mountain of tasks to conquer?</p>
+      <h1 className="heading">Got a mountain of tasks to conquer?</h1>
       <p className="content"> Say goodbye to chaos and hello to productivity  with your personalized  <span className="map2">to-do list!</span>
       <br/> Organize your day, prioritize what matters, and tackle your goals with ease.</p>
       
