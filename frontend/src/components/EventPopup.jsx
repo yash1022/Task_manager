@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import '../CSS/Taskpopup.css';
+import '../CSS/taskpopup.css';
 import { authContext } from '../App';
 import { TaskContext } from './Content';
 
