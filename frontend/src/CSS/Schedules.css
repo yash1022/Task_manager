@@ -55,6 +55,12 @@
     background-color:#f8f9fa;
     
   }
+
+  .notes-container::-webkit-scrollbar {
+    display: none; 
+  }
+
+  
   
   .box-2 {
     width: 360px;

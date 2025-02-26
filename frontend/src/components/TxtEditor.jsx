@@ -6,7 +6,7 @@ import Sidebar from './Sidebar';
 import '../CSS/txtEditor.css'
 import { authContext } from '../App';
 import { MdCheck, MdOutlineDeleteForever } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 export default function TxtEditor() {
@@ -17,6 +17,8 @@ export default function TxtEditor() {
 	const quillRef =useRef(null);
   const Auth= useContext(authContext)
   const nav= useNavigate();
+  const loc =useLocation();
+  const eventid = loc.state?.Eventid || 0;
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -35,7 +37,7 @@ export default function TxtEditor() {
             email: id
           }
 
-          const response= fetch('http://localhost:5000/api/saveNotes',{
+          const response= fetch(`http://localhost:5000/api/saveNotes/${eventid}`,{
              method: 'POST',
              headers:{
                'Content-Type':'application/json'
@@ -54,6 +56,9 @@ export default function TxtEditor() {
           ...prevNotes,
         ])
             SetTitle('');
+            trigger?setTrigger(false):setTrigger(true);
+
+            
             handleDelete();
           }
           else{
@@ -127,6 +132,7 @@ useEffect(() => {
     {
      
       setNotes(data.notes);
+      
     }
 
     else

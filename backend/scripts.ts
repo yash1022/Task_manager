@@ -111,7 +111,7 @@ catch (error) {
 }
 
 
-export const getEvents = async (email:any)=>{
+export const getEvents = async (email:any, includeNotes:any)=>{
     try
     {
          const userData = await prisma.user.findUnique({
@@ -127,8 +127,10 @@ export const getEvents = async (email:any)=>{
 
          const events = await prisma.events.findMany({
             where:{
-                userId:userData.id
-            }
+                userId:userData.id,
+            },
+            include: includeNotes ? { notes: true } : undefined
+           
          })
 
          return events;
@@ -141,7 +143,7 @@ export const getEvents = async (email:any)=>{
     }
 }
 
-export const saveNotes = async(title:any, notes:any, emailId:any)=>{
+export const saveNotes = async(title:any, notes:any, emailId:any, eventid:number)=>{
 
     try{
     const userData=await prisma.user.findUnique({
@@ -159,7 +161,8 @@ export const saveNotes = async(title:any, notes:any, emailId:any)=>{
         data:{
             title:title,
             content:notes,
-            userId:userData.id
+            userId:userData.id,
+            eventId:eventid !== 0?eventid :null,
         } 
     })
 
@@ -716,6 +719,44 @@ export const deleteTask = async(id:any)=>{
 }
 
     
+
+
+
+
+
+}
+
+export const updateEventStatus = async(id:any, status:any)=>{
+
+    try
+    {
+
+
+        await prisma.events.update({
+
+            where:{
+                id:Number(id)
+            },
+            data:{
+                status:!status
+            }
+    
+    
+            
+        })
+
+
+        
+    }
+
+
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+    }
+
 
 
 

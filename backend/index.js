@@ -3,7 +3,7 @@ const app= express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
 const {insert_user, createEvent, getEvents, saveNotes, getNotes, deleteNote, addSubject,getSubjects,addCard, getFlashcards, deleteEvent,
-addCategory, getCategory, addTask, getTasks,updateStatus, deleteTask} = require("./scripts")
+addCategory, getCategory, addTask, getTasks,updateStatus, deleteTask, updateEventStatus} = require("./scripts")
 
 
 app.use(bodyParser.json());
@@ -40,23 +40,23 @@ app.post('/api/events',async (req, res) => {
    res.json(response);
 })
 
-app.post('/api/getEvents', async(req,res)=>{
-    const {email} = req.body;
+app.get('/api/getEvents/:emailId', async(req,res)=>{
+   const{emailId}= req.params
+   const{includeNotes}= req.query
 
-    const events = await getEvents(email);
-   
+    const events = await getEvents(emailId,includeNotes);
 
+    console.log(JSON.stringify(events, null, 2));
     res.json(events);
 
 })
 
-app.post('/api/saveNotes', async(req,res)=>{
+app.post('/api/saveNotes/:eventid', async(req,res)=>{
     const {title,content,email}= req.body;
+    const {eventid}= req.params;
 
-console.log({title,content,email});
-  const resposne= await saveNotes(title,content,email);
-
-  res.json(resposne);
+    const response= await saveNotes(title,content,email, parseInt(eventid));
+    res.json(response);
 })
 
 app.get('/api/getNotes/:email',async (req,res)=>{
@@ -213,6 +213,20 @@ app.delete('/api/deleteTask/:id', async(req,res)=>{
     const {id}= req.params;
     const response = await deleteTask(parseInt(id));
     res.json(response);
+ })
+
+
+ app.patch('/api/updateEventStatus/:id',async(req,res)=>{
+
+    const {id}= req.params;
+    const {status}= req.body;
+
+    await updateEventStatus(id,status);
+
+
+
+
+
  })
 
  

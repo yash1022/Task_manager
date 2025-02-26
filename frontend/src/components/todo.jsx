@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { MdCheck, MdOutlineDeleteForever } from "react-icons/md";
 import "../CSS/todo.css";
 import { PopContext as PopContext1 } from "./Content";
@@ -12,11 +12,12 @@ function Todo() {
    
     const Popup_context = Popup_context1// Use whichever context is available
     const Auth = useContext(authContext);
+    const timeouts = useRef({})
     
 
     useEffect(() => {
       
-            fetchTasks(Auth.User.email);
+            fetchTasks();
        
     }, [Popup_context?.update]);
 
@@ -25,15 +26,15 @@ function Todo() {
         return new Date(dateString).toLocaleDateString('en-GB', options);
       };
 
-    const fetchTasks= async (email)=>{
+    const fetchTasks= async ()=>{
 
         try{
-        const response = await fetch('http://localhost:5000/api/getEvents',{
-                method: 'POST',
+        const response = await fetch(`http://localhost:5000/api/getEvents/${Auth.User.email}?includeNotes=false`,{
+                method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email }),
+                
             });
 
             if (!response.ok) {
@@ -86,6 +87,55 @@ function Todo() {
                 task.id === id ? { ...task, status: !task.status } : task
             )
         );
+
+        if(timeouts.current[id])
+        {
+            clearTimeout(timeouts.current[id])
+        }
+
+        timeouts.current[id]= setTimeout(async() => {
+
+            try
+            {
+
+
+                const response = await fetch(`http://localhost:5000/api/updateEventStatus/${id}`,{
+                    method:'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({status: Popup_context.task.find(data=>data.id===id).status}),
+
+                })
+
+                if(response.ok)
+                {
+                    alert("datbase updted");
+                }
+
+
+
+            }
+            catch(e)
+            {
+                console(e);
+            }
+            finally
+            {
+                delete timeouts.current[id];
+            }
+            
+
+           
+
+
+            
+        }, 5*1000);
+
+    
+
+
+
     };
 
     return (

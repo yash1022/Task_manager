@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTask = exports.updateStatus = exports.getTasks = exports.addTask = exports.getCategory = exports.addCategory = exports.deleteEvent = exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getEvents = exports.createEvent = exports.insert_user = void 0;
+exports.updateEventStatus = exports.deleteTask = exports.updateStatus = exports.getTasks = exports.addTask = exports.getCategory = exports.addCategory = exports.deleteEvent = exports.getFlashcards = exports.addCard = exports.getSubjects = exports.addSubject = exports.deleteNote = exports.getNotes = exports.saveNotes = exports.getEvents = exports.createEvent = exports.insert_user = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const insert_user = (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -82,7 +82,7 @@ const createEvent = (tasks, userEmail) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.createEvent = createEvent;
-const getEvents = (email) => __awaiter(void 0, void 0, void 0, function* () {
+const getEvents = (email, includeNotes) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userData = yield prisma.user.findUnique({
             where: {
@@ -94,8 +94,9 @@ const getEvents = (email) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const events = yield prisma.events.findMany({
             where: {
-                userId: userData.id
-            }
+                userId: userData.id,
+            },
+            include: includeNotes ? { notes: true } : undefined
         });
         return events;
     }
@@ -108,7 +109,7 @@ const getEvents = (email) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getEvents = getEvents;
-const saveNotes = (title, notes, emailId) => __awaiter(void 0, void 0, void 0, function* () {
+const saveNotes = (title, notes, emailId, eventid) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userData = yield prisma.user.findUnique({
             where: {
@@ -122,7 +123,8 @@ const saveNotes = (title, notes, emailId) => __awaiter(void 0, void 0, void 0, f
             data: {
                 title: title,
                 content: notes,
-                userId: userData.id
+                userId: userData.id,
+                eventId: eventid !== 0 ? eventid : null,
             }
         });
         return { success: true, message: "NOTE SAVED SUCCESSFULLY" };
@@ -500,3 +502,23 @@ const deleteTask = (id) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.deleteTask = deleteTask;
+const updateEventStatus = (id, status) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield prisma.events.update({
+            where: {
+                id: Number(id)
+            },
+            data: {
+                status: !status
+            }
+        });
+    }
+    catch (error) {
+        console.error('Error inserting user:', error);
+        throw error;
+    }
+    finally {
+        yield prisma.$disconnect();
+    }
+});
+exports.updateEventStatus = updateEventStatus;
