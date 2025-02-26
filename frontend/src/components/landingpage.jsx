@@ -110,7 +110,7 @@ function LandingPage() {
   </div>
   <div class="f-1">
     <div className="para">
-      <p className='heading'>Struggling to manage your time? </p>
+      <h1 className='heading'>Struggling to manage your time? </h1>
       <p className='content'> With our smart  <span className="map2">Schedules</span>
       planning your day has never been easier! Organize tasks, set priorities, and stay on track effortlessly.</p>
       
