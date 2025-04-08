@@ -176,7 +176,7 @@ useEffect(() => {
 			<Sidebar></Sidebar>
 			</div>
              
-			 <div style={{ height:'82vh',width:'860px',marginLeft:'280px',backgroundColor:"#f8f9fa",paddingLeft:'10px', paddingTop:'10px', paddingRight:'10px',borderRadius:'15px',boxShadow:'0 4px 6px rgba(0, 0, 0, 0.1)'}}>
+			 <div style={{ height:'86vh',width:'860px',marginLeft:'280px',backgroundColor:"#f8f9fa",paddingLeft:'10px', paddingTop:'10px', paddingRight:'10px',borderRadius:'15px',boxShadow:'0 4px 6px rgba(0, 0, 0, 0.1)'}}>
 			 
 			       <input type="text" autocomplete="off" name="text" class="input" placeholder="Title" value={Title} onChange={(e)=>SetTitle(e.target.value)}/>
 

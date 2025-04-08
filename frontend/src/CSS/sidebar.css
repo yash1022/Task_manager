@@ -12,6 +12,12 @@
   position:fixed;
   margin: 0;
 }
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This centers both image and text horizontally */
+  justify-content: center;
+}
 
 /* Profile image */
 .profile-img {
@@ -21,6 +27,8 @@
   object-fit: cover;
   border: 2px solid #ddd;
   margin-left: 10px;
+  margin-bottom: 5px;
+  
 }
 
 /* Profile name */

@@ -83,7 +83,7 @@ function LandingPage() {
 
   <div class="f-1">
     <div className="para">
-      <h1 className="heading">Got a mountain of tasks to conquer?</h1>
+      <p className="heading"><h2>Got a mountain of tasks to conquer?</h2></p>
       <p className="content"> Say goodbye to chaos and hello to productivity  with your personalized  <span className="map2">to-do list!</span>
       <br/> Organize your day, prioritize what matters, and tackle your goals with ease.</p>
       
@@ -99,7 +99,7 @@ function LandingPage() {
     <div className="img2"><img src="./note.jpg" alt="" /></div>
 
     <div className="para2">
-      <p className='heading2'>Too many ideas slipping away?</p>
+      <p className='heading2'><h2>Too many ideas slipping away?</h2></p>
       <p className='content2'>Stay organized and capture every thought with smart <br />  <span className="map2">note-making!</span>
      <br/> Jot down ideas, keep track of details, and organize your notes effortlessly</p>
       </div>
