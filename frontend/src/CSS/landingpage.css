@@ -1,6 +1,6 @@
 * {
     margin:0;
-    padding:0;
+    padding:0px;
     font-family: 'Arvo';
   }
   
@@ -201,7 +201,7 @@
 /* From Uiverse.io by Gaurav-WebDev */ 
 .button {
   height: 50px;
-  margin-left: 650px;
+  margin-left: 720px;
   margin-top: 20px;
   width: 200px;
   position: relative;
@@ -253,7 +253,7 @@
     padding-top: 30px;
     display: flex;
     float: left;
-    margin-left: 210px;
+    margin-left: 110px;
     gap: 70px;
  }
     
@@ -315,8 +315,8 @@
   
 .heading{
   font-family: "Montserrat", serif;
-  font-size:50px;
-  font-weight: 700;
+  font-size:40px;
+  font-weight: 900;
 }
 
 .content
@@ -359,7 +359,7 @@
 .heading2
 {
   font-family: "Montserrat", serif;
-  font-size:50px;
+  font-size:40px;
   font-weight: 700;
 }
 
